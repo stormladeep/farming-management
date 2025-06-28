@@ -1,0 +1,99 @@
+Contact Section:
+
+The "Contact Us" section is divided into two parts: address and map for each office, and contact information with social media links.
+The map is embedded using an <iframe> from Google Maps. Make sure to replace the "https://www.google.com/maps/embed?pb=!1m18..." with the actual embedded map URL.
+Social Media Links:
+
+The social media icons are linked to the corresponding pages (Facebook, Twitter, LinkedIn). Clicking on these icons will open the social media pages in a new tab.
+Replace "facebook.png", "twitter.png", and "linkedin.png" with the correct paths to your social media icons.
+Responsive Design:
+
+The address and contact sections are designed to be responsive and should look good on different screen sizes. The layout adjusts by using flexbox.
+
+Explanation:
+Component Sections:
+
+Each component now has four images and a summary paragraph explaining what the component is about.
+Images are displayed using the .images class in a flexible layout.
+CSS Styling:
+
+Images are displayed in a row within each component and will scale slightly when hovered (transform: scale(1.1);).
+The component layout is flexible to ensure it adapts to different screen sizes.
+HTML Structure:
+
+Each component has an h2 for the title, an images section containing four images, a summary paragraph, and an "Explore" button.
+Navigation and Button Hover Effects:
+
+These effects are retained from the previous update.
+
+Online Inventory Management Software is an open-source project developed by procedural PHP, MySQL, bootstrap, and jquery. This application is based on a web application and developed with procedural PHP, MySQL database, jquery, datatables plugins, and Bootstrap. This application provides users to manage brands, categories, products, orders, and reports. This system provides the best inventory management software features. This system can be also used for small businesses. It is free web-based inventory management software.
+
+On the brand’s page, the admin can add, update, and remove the brand’s information. In the product section, the admin can add product information and manage the stock. In the order section, the application will manage the stock of the product and generates the total amount of payment to be paid by the client. The application can also generate the orders report based on the month you select.
+
+Requirements
+PHP Version +5.4.4
+Web Server ( Recommended: Apache with PHP and Mysqli )
+Features
+View of the total number of brands, categories, products, and orders.
+Add, update, and remove brand information.
+Add, update, and remove categories information.
+Add, update, and remove product details.
+Add, update, and remove order details.
+Print orders invoice.
+Update order payment.
+Generate the orders report by selecting specific start and end dates.
+Change Password
+Change Username
+Users
+Admin
+Username: admin
+password: password
+Change the VAT
+To change the vat number, all you have to do is go to the order.js file which is located at [custom/js/order.js] and search for subAmount function. In line 555, you will see the VAT variable, change the VAT number that you desired. To change the vat number in the front end of the application, go to orders.php, and at line 369, you will see the VAT label, change it to the number you desire.
+
+Download Online Stock Management System
+Please Read:
+
+While creating the database for this system, either you can create the name of the database as a stock or change the name at the php_action/db_connect.php file. As shown below:
+
+
+
+<php 
+$localhost = "127.0.0.1"; 
+$username = "root"; 
+$password = ""; 
+$dbname = "stock"; 
+
+// db connection 
+$connect = new mysqli($localhost, $username, $password, $dbname);
+
+// check connection 
+if($connect->connect_error) {
+   die("Connection Failed : " . $connect->connect_error);
+} else {
+   // echo "Successfully connected";
+}
+
+?>
+
+for products
+<!-- Products Page -->
+<div class="products-page">
+    <h1>Products</h1>
+    <table class="products-table" id="productsTable">
+        <thead>
+            <tr>
+                <th>Crop Name</th>
+                <th>Field</th>
+                <th>Seeds (Quantity)</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Status</th>
+                <th>Image</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Products will be populated here -->
+        </tbody>
+    </table>
+</div>
