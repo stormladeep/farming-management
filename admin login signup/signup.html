@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        /* General Body Styling */
+        body {
+            background: linear-gradient(135deg, #6fb98f, #f2a365);
+            font-family: 'Arial', sans-serif;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+        }
+    
+        /* Container */
+        .container {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+    
+        /* Title Styling */
+        h2 {
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #333;
+        }
+    
+        /* Form Inputs Styling */
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+    
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            font-size: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+            margin-bottom: 1rem;
+            transition: all 0.3s;
+        }
+    
+        .form-control:focus {
+            border-color: #6fb98f;
+            box-shadow: 0 0 8px rgba(111, 185, 143, 0.3);
+            outline: none;
+        }
+    
+        /* Buttons Styling */
+        .btn-primary {
+            background-color: #6fb98f;
+            border: none;
+            padding: 10px 15px;
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+    
+        .btn-primary:hover {
+            background-color: #5a9a7a;
+        }
+    
+        /* Links Styling */
+        a {
+            color: #6fb98f;
+            text-decoration: none;
+        }
+    
+        a:hover {
+            text-decoration: underline;
+        }
+    
+        /* Error and Success Message Styling */
+        .alert {
+            padding: 10px;
+            background-color: #f8d7da;
+            color: #721c24;
+            margin-bottom: 15px;
+            border-radius: 4px;
+        }
+    
+        /* OTP Form Styling */
+        .otp-form {
+            margin-top: 20px;
+            text-align: center;
+        }
+    </style>
+    
+</head>
+<body>
+    <div class="container mt-5">
+        <h2>Register</h2>
+        <form action="signup.php" method="POST">
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" class="form-control" id="username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" class="form-control" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" class="form-control" id="password" name="password" required>
+            </div>
+            <div class="form-group">
+                <label for="role">Role:</label>
+                <select class="form-control" id="role" name="role" required>
+                    <option value="user">Customer</option>
+                    <option value="admin">Admin</option>
+                </select>
+                <p>By creating an account you agree to our 
+                    <a href="../T&C/tnc.html" target="_blank">Terms & Privacy</a>.
+                </p>
+                
+                <label>
+                    <input type="checkbox" id="terms" name="terms"> I accept the terms and conditions
+                </label>
+            </div>
+            <button type="submit" class="btn btn-primary" name="signup">Register</button>
+        </form>
+        <p>Already have an account? <a href="../admin login signup/login.html">Login here</a></p>
+    </div>
+</body>
+</html>

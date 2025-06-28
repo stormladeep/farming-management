@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Store</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Link to FontAwesome for Cart Icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .hero {
+            text-align: center;
+            background: url('live_stock.png') no-repeat center center/cover;
+            padding: 100px 20px;
+            color: white;
+        }
+
+        .hero h2 {
+            color: white;
+        }
+
+        .cart-icon {
+            font-size: 1.5rem;
+            color: white;
+            margin-right: 10px;
+            position: relative;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background-color: red;
+            color: white;
+            border-radius: 50%;
+            padding: 5px;
+            font-size: 0.8rem;
+        }
+
+        .product-grid {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .product-item {
+            margin: 20px;
+            text-align: center;
+        }
+
+        footer {
+            background-color: #f8f8f8;
+            padding: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="#">My Store</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#crops">Crops</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#livestock">Livestock</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact Us</a>
+                    </li>
+                </ul>
+                <a href="cart.html" class="nav-link">
+                    <i class="fas fa-shopping-cart cart-icon"></i>
+                    <span class="cart-count" id="cartCount">0</span>
+                </a>
+            </div>
+        </div>
+    </header>
+    
+    <section class="hero d-flex justify-content-center align-items-center">
+        <div>
+            <h2>Browse our latest products</h2>
+            <button class="btn btn-primary">Shop All</button>
+        </div>
+    </section>
+    
+    <section class="featured-products container">
+        <h3 class="text-center my-4">Featured Products</h3>
+        <div class="product-grid row">
+            <div class="product-item col-md-4">
+                <a href="cow.html">
+                    <img src="Photo_by_freestocks_org_on_Pexels.webp" alt="Cow" class="img-fluid">
+                    <h4>Cow</h4>
+                    <p>R 20,000.00 ZAR</p>
+                </a>
+                <button class="btn btn-success" onclick="addToCart('Cow', 1)">Add to Cart</button>
+            </div>
+            <div class="product-item col-md-4">
+                <img src="download_2.webp" alt="Eggplant" class="img-fluid">
+                <h4>Eggplant</h4>
+                <p>R 40.00 ZAR</p>
+                <button class="btn btn-success" onclick="addToCart('Eggplant', 1)">Add to Cart</button>
+            </div>
+            <div class="product-item col-md-4">
+                <img src="Super_Easy_Roasted_Corn_Ribs_-_Sunny_with_Shadows.webp" alt="Corn" class="img-fluid">
+                <h4>Sweet Corn</h4>
+                <p>R 20.00 ZAR</p>
+                <button class="btn btn-success" onclick="addToCart('Sweet Corn', 1)">Add to Cart</button>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <form class="form-inline justify-content-center">
+            <label for="email" class="sr-only">Email</label>
+            <input type="email" id="email" name="email" placeholder="Enter your email" class="form-control mb-2 mr-sm-2">
+            <button type="submit" class="btn btn-primary mb-2">Subscribe</button>
+        </form>
+    </footer>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- JavaScript for Cart Functionality -->
+    <script>
+        let cartCount = 0;
+
+        function addToCart(item, quantity) {
+            cartCount += quantity;
+            document.getElementById('cartCount').textContent = cartCount;
+            alert(item + " added to cart!");
+        }
+    </script>
+</body>
+</html>

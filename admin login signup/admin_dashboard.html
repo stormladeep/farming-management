@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <!-- Google Charts API -->
+    <script src="https://www.gstatic.com/charts/loader.js"></script>
+    
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+
+    <!-- Custom CSS (optional) -->
+    <link rel="stylesheet" href="dashboard.css">
+    <style>
+        /* Increased size for chart containers */
+        .chart {
+            width: 100%; /* Use full width of parent */
+            height: 400px; /* Set a fixed height for better visibility */
+            margin-bottom: 20px; /* Add some space below each chart */
+        }
+
+        .stat-card {
+            transition: background-color 0.5s ease; /* Smooth transition for background color */
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard d-flex">
+        <!-- Sidebar -->
+        <aside class="sidebar  p-3">
+            <h2 class="text-primary"><i class="fas fa-tractor"></i> Farming Management System</h2>
+            <nav>
+                <ul class="list-group">
+                    <li class="list-group-item"><a href="../admin login signup/admin_dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                    <li class="list-group-item"><a href="../crops/index.html"><i class="fas fa-seedling"></i> Crops</a></li>
+                    <li class="list-group-item"><a href="../livestock/index.html"><i class="fas fa-paw"></i> Livestock</a></li>
+                    <li class="list-group-item"><a href="../Fields/fields.html"><i class="fas fa-map-marked-alt"></i> Fields</a></li>
+                    <li class="list-group-item"><a href="../reports/reports.html"><i class="fas fa-file-alt"></i> Reports</a></li>
+                    <li class="list-group-item"><a href="../inventory/index.html"><i class="fas fa-warehouse"></i> Inventory</a></li>
+                    <li class="list-group-item"><a href="../labour/labour.html"><i class="fas fa-tasks"></i> labour</a></li>
+                    <li class="list-group-item"><a href="../order/index.html"><i class="fas fa-boxes"></i> Orders</a></li>
+                    <li class="list-group-item"><a href="../products/product.html"><i class="fas fa-tasks"></i> Products</a></li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer mt-4">
+                <a href="..//chatbot/index.html" class="btn btn-outline-primary btn-sm d-block mb-2"><i class="fas fa-headset"></i> Support</a>
+                <a href="settings.html" class="btn btn-outline-secondary btn-sm d-block mb-2" data-bs-toggle="modal" data-bs-target="#profileModal"><i class="fas fa-cogs"></i> Settings</a>
+                <button class="signout-button" onclick="window.location.href='../home/home.html'">Sign Out</button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content container-fluid">
+            <!-- Header with Search and Profile -->
+            <header class="d-flex justify-content-between align-items-center p-3 border-bottom">
+                <div class="search-language d-flex">
+                    <input type="text" class="form-control me-2" placeholder="Search here..." id="search-bar">
+                    <button id="search-btn" class="btn btn-primary"><i class="fas fa-search"></i></button>
+                    
+                    
+                </div>
+
+                <div class="user-profile d-flex align-items-center">
+                    <span id="user-name" class="me-2">Hi, Username</span> <!-- Username will be replaced dynamically -->
+                    <img id="profile-pic" src="default-profile.png" alt="Profile Picture" class="rounded-circle me-2" style="width: 40px; height: 40px;">
+                    <div class="dropdown ms-3">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Profile
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#" id="edit-profile">Edit Profile</a></li>
+                            <li><a class="dropdown-item" href="#" id="change-picture" data-bs-toggle="modal" data-bs-target="#profileModal">Change Picture</a></li>
+                            
+                        </ul>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Stats Overview -->
+            <section class="stats-overview row text-center mt-4">
+                <div class="col-md-4">
+                    <div class="stat-card p-3 border rounded" id="total-crops-card" data-bs-toggle="modal" data-bs-target="#totalCropsModal">
+                        <i class="fas fa-seedling fa-2x text-success"></i>
+                        <p class="mt-2">300 Total Crops</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="stat-card p-3 border rounded" id="total-livestock-card" data-bs-toggle="modal" data-bs-target="#totalLivestockModal">
+                        <i class="fas fa-paw fa-2x text-warning"></i>
+                        <p class="mt-2">120 Total Livestock</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="stat-card p-3 border rounded" id="total-employees-card" data-bs-toggle="modal" data-bs-target="#totalEmployeesModal">
+                        <i class="fas fa-users fa-2x text-primary"></i>
+                        <p class="mt-2">85 Total Employees</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Modals -->
+            <!-- Total Crops Modal -->
+            <div class="modal fade" id="totalCropsModal" tabindex="-1" aria-labelledby="totalCropsModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="totalCropsModalLabel">Total Crops</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Crop Name</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="crops-table-body">
+                                    <!-- Crops data will be dynamically inserted here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Total Livestock Modal -->
+            <div class="modal fade" id="totalLivestockModal" tabindex="-1" aria-labelledby="totalLivestockModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="totalLivestockModalLabel">Total Livestock</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Livestock Type</th>
+                                        <th>Name</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="livestock-table-body">
+                                    <!-- Livestock data will be dynamically inserted here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Total Employees Modal -->
+            <div class="modal fade" id="totalEmployeesModal" tabindex="-1" aria-labelledby="totalEmployeesModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="totalEmployeesModalLabel">Total Employees</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Name</th>
+                                        <th>Surname</th>
+                                        <th>Contact</th>
+                                        <th>Address</th>
+                                        <th>Position</th>
+                                        <th>Gender</th>
+                                        <th>Race</th>
+                                        <th>ID</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="employees-table-body">
+                                    <!-- Employee data will be dynamically inserted here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts Section -->
+            <section class="charts row mt-4">
+                <div id="revenue-chart" class="chart col-md-6"></div>
+                <div id="yield-chart" class="chart col-md-6"></div>
+                <div id="top-products-chart" class="chart col-md-6 mt-4"></div>
+                <div id="soil-moisture-chart" class="chart col-md-6 mt-4"></div>
+            </section>
+
+            <!-- Tasks and Weather Section -->
+            <section class="tasks-weather row mt-4">
+               
+                <nav class="navbar">
+                    <a href="../Weather-card-master/index.html" class="back-link">&larr; See Weather</a>
+                </nav> 
+                <dfn></dfn>
+                  
+                        </div>
+                      </div>
+                  
+                    </div>
+                  </div>
+            </section>
+            
+        </main>
+    </div>
+
+   
+
+    <!-- Profile Modal -->
+<div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="profileModalLabel">Edit Profile</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="profile-form">
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Username</label>
+                        <input type="text" class="form-control" id="username" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Name</label>
+                        <input type="text" class="form-control" id="name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="surname" class="form-label">Surname</label>
+                        <input type="text" class="form-control" id="surname" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="contact" class="form-label">Contact</label>
+                        <input type="text" class="form-control" id="contact" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="address" class="form-label">Address</label>
+                        <input type="text" class="form-control" id="address" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="language" class="form-label">Language</label>
+                        <select class="form-select" id="language" required>
+                            <option value="en">English</option>
+                            <option value="sesotho">Sesotho</option>
+                            <option value="zulu">Zulu</option>
+                            <option value="chinese">Chinese</option>
+                            <option value="french">French</option>
+                            <option value="afrikaans">Afrikaans</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="profile-pic-upload" class="form-label">Profile Picture</label>
+                        <input type="file" class="form-control" id="profile-pic-upload" accept="image/*">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Custom JS -->
+    <script>
+
+
+
+        // Get the username from localStorage and display it
+        window.onload = function() {
+            const username = localStorage.getItem('username');
+            const name = localStorage.getItem('name');
+            const surname = localStorage.getItem('surname');
+            const contact = localStorage.getItem('contact');
+            const address = localStorage.getItem('address');
+            const profilePic = localStorage.getItem('profilePic');
+
+            if (username) {
+                document.getElementById('user-name').textContent = `Hi, ${username}`;
+                document.getElementById('username').value = username;
+                document.getElementById('name').value = name || '';
+                document.getElementById('surname').value = surname || '';
+                document.getElementById('contact').value = contact || '';
+                document.getElementById('address').value = address || '';
+                document.getElementById('profile-pic').src = profilePic || 'default-profile.png';
+            } else {
+                document.getElementById('user-name').textContent = "Hi, Guest";
+            }
+
+            // Start color change function for stats overview
+            changeStatCardColors();
+        };
+
+        function signOut() {
+            localStorage.removeItem('username');
+            localStorage.removeItem('name');
+            localStorage.removeItem('surname');
+            localStorage.removeItem('contact');
+            localStorage.removeItem('address');
+            localStorage.removeItem('profilePic');
+            window.location.href = 'home.html'; // Redirect to home page
+        }
+
+        function changeStatCardColors() {
+            const colors = ['#f8d7da', '#d1ecf1', '#d4edda', '#fff3cd', '#cce5ff', '#e2e3e5'];
+            let index = 0;
+
+            setInterval(() => {
+                const statCards = document.querySelectorAll('.stat-card');
+                statCards.forEach(card => {
+                    card.style.backgroundColor = colors[index];
+                });
+
+                index = (index + 1) % colors.length; // Cycle through colors
+            }, 5000); // Change color every 5 seconds
+        }
+
+        // Search functionality
+        document.getElementById('search-btn').addEventListener('click', function() {
+            const query = document.getElementById('search-bar').value;
+            alert('Search functionality not implemented. Search query: ' + query);
+        });
+
+        // Load Google Charts and draw charts
+        google.charts.load('current', { 'packages': ['corechart'] });
+        google.charts.setOnLoadCallback(drawCharts);
+
+        function drawCharts() {
+            drawRevenueChart();
+            drawYieldChart();
+            drawTopProductsChart();
+            drawSoilMoistureChart();
+        }
+
+        function drawRevenueChart() {
+            var data = google.visualization.arrayToDataTable([
+                ['Year', 'Revenue'],
+                ['2019', 1000],
+                ['2020', 1170],
+                ['2021', 660],
+                ['2022', 1030]
+            ]);
+            var options = {
+                title: 'Total Revenue',
+                legend: { position: 'bottom' }
+            };
+
+            var chart = new google.visualization.LineChart(document.getElementById('revenue-chart'));
+            chart.draw(data, options);
+        }
+
+        function drawYieldChart() {
+            var data = google.visualization.arrayToDataTable([
+                ['Year', 'Yield'],
+                ['2019', 400],
+                ['2020', 460],
+                ['2021', 1120],
+                ['2022', 540]
+            ]);
+            var options = {
+                title: 'Yield Predictions',
+                legend: { position: 'bottom' }
+            };
+
+            var chart = new google.visualization.LineChart(document.getElementById('yield-chart'));
+            chart.draw(data, options);
+        }
+
+        function drawTopProductsChart() {
+            var data = google.visualization.arrayToDataTable([
+                ['Product', 'Quantity Sold'],
+                ['Wheat', 300],
+                ['Corn', 200],
+                ['Rice', 150],
+                ['Soybeans', 100]
+            ]);
+            var options = {
+                title: 'Top Products',
+                pieHole: 0.4,
+                legend: { position: 'bottom' }
+            };
+
+            var chart = new google.visualization.PieChart(document.getElementById('top-products-chart'));
+            chart.draw(data, options);
+        }
+
+        function drawSoilMoistureChart() {
+            var data = google.visualization.arrayToDataTable([
+                ['Field', 'Moisture Level'],
+                ['Field A', 20],
+                ['Field B', 40],
+                ['Field C', 30],
+                ['Field D', 10]
+            ]);
+            var options = {
+                title: 'Soil Moisture Levels',
+                hAxis: { title: 'Field' },
+                vAxis: { title: 'Moisture Level (%)' },
+                legend: { position: 'bottom' }
+            };
+
+            var chart = new google.visualization.BarChart(document.getElementById('soil-moisture-chart'));
+            chart.draw(data, options);
+        }
+
+        // Profile update form submission
+        document.getElementById('profile-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            // Get form values
+            const username = document.getElementById('username').value;
+            const name = document.getElementById('name').value;
+            const surname = document.getElementById('surname').value;
+            const contact = document.getElementById('contact').value;
+            const address = document.getElementById('address').value;
+            const profilePicUpload = document.getElementById('profile-pic-upload');
+
+            // Handle profile picture upload
+            if (profilePicUpload.files.length > 0) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    localStorage.setItem('profilePic', e.target.result);
+                    document.getElementById('profile-pic').src = e.target.result; // Update profile picture
+                };
+                reader.readAsDataURL(profilePicUpload.files[0]);
+            }
+
+            // Save data to local storage
+            localStorage.setItem('username', username);
+            localStorage.setItem('name', name);
+            localStorage.setItem('surname', surname);
+            localStorage.setItem('contact', contact);
+            localStorage.setItem('address', address);
+
+            // Close the modal
+            var profileModal = bootstrap.Modal.getInstance(document.getElementById('profileModal'));
+            profileModal.hide();
+        });
+    </script>
+    <script>
+        // Simulate data for crops, livestock, and employees
+        const cropsData = [
+
+    { id: 1, name: 'Wheat' },
+    { id: 2, name: 'Corn' },
+    { id: 3, name: 'Rice' },
+    { id: 4, name: 'Barley' },
+    { id: 5, name: 'Oats' },
+    { id: 6, name: 'Sorghum' },
+    { id: 7, name: 'Millet' },
+    { id: 8, name: 'Soybean' },
+    { id: 9, name: 'Peas' },
+    { id: 10, name: 'Lentils' },
+    { id: 11, name: 'Chickpeas' },
+    { id: 12, name: 'Potatoes' },
+    { id: 13, name: 'Sweet Potatoes' },
+    { id: 14, name: 'Carrots' },
+    { id: 15, name: 'Onions' },
+    { id: 16, name: 'Garlic' },
+    { id: 17, name: 'Tomatoes' },
+    { id: 18, name: 'Peppers' },
+    { id: 19, name: 'Cucumbers' },
+    { id: 20, name: 'Zucchini' },
+    { id: 21, name: 'Pumpkin' },
+    { id: 22, name: 'Spinach' },
+    { id: 23, name: 'Lettuce' },
+    { id: 24, name: 'Cabbage' },
+    { id: 25, name: 'Broccoli' },
+    { id: 26, name: 'Cauliflower' },
+    { id: 27, name: 'Brussels Sprouts' },
+    { id: 28, name: 'Kale' },
+    { id: 29, name: 'Eggplant' },
+    { id: 30, name: 'Radish' },
+    { id: 31, name: 'Beetroot' },
+    { id: 32, name: 'Celery' },
+    { id: 33, name: 'Asparagus' },
+    { id: 34, name: 'Artichoke' },
+    { id: 35, name: 'Fennel' },
+    { id: 36, name: 'Rhubarb' },
+    { id: 37, name: 'Basil' },
+    { id: 38, name: 'Cilantro' },
+    { id: 39, name: 'Parsley' },
+    { id: 40, name: 'Thyme' },
+    { id: 41, name: 'Rosemary' },
+    { id: 42, name: 'Sage' },
+    { id: 43, name: 'Mint' },
+    { id: 44, name: 'Chives' },
+    { id: 45, name: 'Lemongrass' },
+    { id: 46, name: 'Chamomile' },
+    { id: 47, name: 'Lavender' },
+    { id: 48, name: 'Hops' },
+    { id: 49, name: 'Tobacco' },
+    { id: 50, name: 'Cotton' },
+    { id: 51, name: 'Flax' },
+    { id: 52, name: 'Hemp' },
+    { id: 53, name: 'Sunflower' },
+    { id: 54, name: 'Canola' },
+    { id: 55, name: 'Sesame' },
+    { id: 56, name: 'Peanuts' },
+    { id: 57, name: 'Almonds' },
+    { id: 58, name: 'Walnuts' },
+    { id: 59, name: 'Hazelnuts' },
+    { id: 60, name: 'Chestnuts' },
+    { id: 61, name: 'Coconut' },
+    { id: 62, name: 'Dates' },
+    { id: 63, name: 'Olives' },
+    { id: 64, name: 'Grapes' },
+    { id: 65, name: 'Blueberries' },
+    { id: 66, name: 'Strawberries' },
+    { id: 67, name: 'Raspberries' },
+    { id: 68, name: 'Blackberries' },
+    { id: 69, name: 'Cranberries' },
+    { id: 70, name: 'Gooseberries' },
+    { id: 71, name: 'Currants' },
+    { id: 72, name: 'Mulberries' },
+    { id: 73, name: 'Cherries' },
+    { id: 74, name: 'Peaches' },
+    { id: 75, name: 'Plums' },
+    { id: 76, name: 'Pears' },
+    { id: 77, name: 'Apples' },
+    { id: 78, name: 'Mangoes' },
+    { id: 79, name: 'Papayas' },
+    { id: 80, name: 'Pineapples' },
+    { id: 81, name: 'Bananas' },
+    { id: 82, name: 'Figs' },
+    { id: 83, name: 'Passionfruit' },
+    { id: 84, name: 'Lychee' },
+    { id: 85, name: 'Dragonfruit' },
+    { id: 86, name: 'Jackfruit' },
+    { id: 87, name: 'Starfruit' },
+    { id: 88, name: 'Kiwifruit' },
+    { id: 89, name: 'Tangerines' },
+    { id: 90, name: 'Mandarins' },
+    { id: 91, name: 'Nectarines' },
+    { id: 92, name: 'Quinces' },
+    { id: 93, name: 'Apricots' },
+    { id: 94, name: 'Cabbage' },
+    { id: 95, name: 'Mushrooms' },
+    { id: 96, name: 'Truffles' },
+    { id: 97, name: 'Alfalfa' },
+    { id: 98, name: 'Mung Beans' },
+    { id: 99, name: 'Adzuki Beans' },
+    { id: 100, name: 'Kidney Beans' },
+    { id: 101, name: 'Pinto Beans' },
+    { id: 102, name: 'Black Beans' },
+    { id: 103, name: 'Navy Beans' },
+    { id: 104, name: 'Lima Beans' },
+    { id: 105, name: 'Fava Beans' },
+    { id: 106, name: 'Bamboo' },
+    { id: 107, name: 'Kudzu' },
+    { id: 108, name: 'Saffron' },
+    { id: 109, name: 'Cilantro' },
+    { id: 110, name: 'Chard' },
+    { id: 111, name: 'Purslane' },
+    { id: 112, name: 'Dandelion' },
+    { id: 113, name: 'Chicory' },
+    { id: 114, name: 'Ginseng' },
+    { id: 115, name: 'Horsetail' },
+    { id: 116, name: 'Comfrey' },
+    { id: 117, name: 'Stinging Nettle' },
+    { id: 118, name: 'Burdock' },
+    { id: 119, name: 'Moringa' },
+    { id: 120, name: 'Tumeric' },
+    { id: 121, name: 'Ginger' },
+    { id: 122, name: 'Galangal' },
+    { id: 123, name: 'Wasabi' },
+    { id: 124, name: 'Kelp' },
+    { id: 125, name: 'Seaweed' },
+    { id: 126, name: 'Nasturtium' },
+    { id: 127, name: 'Calendula' },
+    { id: 128, name: 'Echinacea' },
+    { id: 129, name: 'Lemon Balm' },
+    { id: 130, name: 'St. John’s Wort' },
+    { id: 131, name: 'Milk Thistle' },
+    { id: 132, name: 'Bee Balm' },
+    { id: 133, name: 'Catnip' },
+    { id: 134, name: 'Lemon Verbena' },
+    { id: 135, name: 'Valerian' },
+    { id: 136, name: 'Yarrow' },
+    { id: 137, name: 'Peppermint' },
+    { id: 138, name: 'Spearmint' },
+    { id: 139, name: 'Hibiscus' },
+    { id: 140, name: 'Rose' },
+    { id: 141, name: 'Jasmine' },
+    { id: 142, name: 'Gardenia' },
+    { id: 143, name: 'Azalea' },
+    { id: 144, name: 'Chrysanthemum' },
+    { id: 145, name: 'Peony' },
+    { id: 146, name: 'Zinnia' },
+    { id: 147, name: 'Daisy' },
+    { id: 148, name: 'Sunflower' },
+    { id: 149, name: 'Pansy' },
+    { id: 150, name: 'Petunia' },
+    { id: 151, name: 'Marigold' },
+    { id: 152, name: 'Geranium' },
+    { id: 153, name: 'Larkspur' },
+    { id: 154, name: 'Snapdragon' },
+    { id: 155, name: 'Foxglove' },
+    { id: 156, name: 'Hydrangea' },
+    { id: 157, name: 'Bleeding Heart' },
+    { id: 158, name: 'Hellebore' },
+    { id: 159, name: 'Astilbe' },
+    { id: 160, name: 'Delphinium' },
+    { id: 161, name: 'Aster' },
+    { id: 162, name: 'Lobelia' },
+    { id: 163, name: 'Fuchsia' },
+    { id: 164, name: 'Nasturtium' },
+    { id: 165, name: 'Corydalis' },
+    { id: 166, name: 'Celosia' },
+    { id: 167, name: 'Coleus' },
+    { id: 168, name: 'Plectranthus' },
+    { id: 169, name: 'Dahlias' },
+    { id: 170, name: 'Gladiolus' },
+    { id: 171, name: 'Calla Lily' },
+    { id: 172, name: 'Bird of Paradise' },
+    { id: 173, name: 'Orchid' },
+    { id: 174, name: 'Anthurium' },
+    { id: 175, name: 'Kalanchoe' },
+    { id: 176, name: 'Succulent' },
+    { id: 177, name: 'Cactus' },
+    { id: 178, name: 'Bonsai' },
+    { id: 179, name: 'Aloe Vera' },
+    { id: 180, name: 'Rubber Plant' },
+    { id: 181, name: 'Spider Plant' },
+    { id: 182, name: 'Peace Lily' },
+    { id: 183, name: 'Fiddle Leaf Fig' },
+    { id: 184, name: 'Dracaena' },
+    { id: 185, name: 'Snake Plant' },
+    { id: 186, name: 'ZZ Plant' },
+    { id: 187, name: 'Pothos' },
+    { id: 188, name: 'Philodendron' },
+    { id: 189, name: 'Monstera' },
+    { id: 190, name: 'Jade Plant' },
+    { id: 191, name: 'Bamboo Palm' },
+    { id: 192, name: 'Lady Palm' },
+    { id: 193, name: 'Chinese Evergreen' },
+    { id: 194, name: 'Parlor Palm' },
+    { id: 195, name: 'Sago Palm' },
+    { id: 196, name: 'Fishtail Palm' },
+    { id: 197, name: 'Date Palm' },
+    { id: 198, name: 'Kentia Palm' },
+    { id: 199, name: 'Queen Palm' },
+    { id: 200, name: 'Royal Palm' },
+    { id: 201, name: 'Foxtail Palm' },
+    { id: 202, name: 'Ponytail Palm' },
+    { id: 203, name: 'Windmill Palm' },
+    { id: 204, name: 'Coconut Palm' },
+    { id: 205, name: 'Dwarf Palm' },
+    { id: 206, name: 'Areca Palm' },
+    { id: 207, name: 'Cabbage Palm' },
+    { id: 208, name: 'Chinese Fan Palm' },
+    { id: 209, name: 'Carpenteria' },
+    { id: 210, name: 'Firestick' },
+    { id: 211, name: 'Frosty Fern' },
+    { id: 212, name: 'Baby Tears' },
+    { id: 213, name: 'Club Moss' },
+    { id: 214, name: 'Wandering Jew' },
+    { id: 215, name: 'Creeping Charlie' },
+    { id: 216, name: 'English Ivy' },
+    { id: 217, name: 'Pansy' },
+    { id: 218, name: 'Shasta Daisy' },
+    { id: 219, name: 'Feverfew' },
+    { id: 220, name: 'Goldenrod' },
+    { id: 221, name: 'Lantana' },
+    { id: 222, name: 'Lavender' }
+    
+
+        ];
+
+        const  livestockData= [
+    { id: 1, type: 'Sheep', name: 'Dolly' },
+    { id: 2, type: 'Goat', name: 'Billy' },
+    { id: 3, type: 'Cow', name: 'Bessie' },
+    { id: 4, type: 'Pig', name: 'Porky' },
+    { id: 5, type: 'Chicken', name: 'Cluckers' },
+    { id: 6, type: 'Duck', name: 'Quackers' },
+    { id: 7, type: 'Turkey', name: 'Tom' },
+    { id: 8, type: 'Horse', name: 'Spirit' },
+    { id: 9, type: 'Donkey', name: 'Eeyore' },
+    { id: 10, type: 'Llama', name: 'Lola' },
+    { id: 11, type: 'Alpaca', name: 'Alfred' },
+    { id: 12, type: 'Rabbit', name: 'Thumper' },
+    { id: 13, type: 'Guinea Pig', name: 'Nibbles' },
+    { id: 14, type: 'Bison', name: 'Buffy' },
+    { id: 15, type: 'Yak', name: 'Yeti' },
+    { id: 16, type: 'Reindeer', name: 'Rudolph' },
+    { id: 17, type: 'Goose', name: 'Gander' },
+    { id: 18, type: 'Peafowl', name: 'Penny' },
+    { id: 19, type: 'Emu', name: 'Eddie' },
+    { id: 20, type: 'Ostrich', name: 'Oscar' },
+    { id: 21, type: 'Pheasant', name: 'Philly' },
+    { id: 22, type: 'Ferret', name: 'Fuzzy' },
+    { id: 23, type: 'Swan', name: 'Sophie' },
+    { id: 24, type: 'Capybara', name: 'Cappy' },
+    { id: 25, type: 'Cavy', name: 'Clover' },
+    { id: 26, type: 'Kangaroo', name: 'Joey' },
+    { id: 27, type: 'Wallaby', name: 'Wally' },
+    { id: 28, type: 'Sika Deer', name: 'Bambi' },
+    { id: 29, type: 'Mule', name: 'Molly' },
+    { id: 30, type: 'Zebra', name: 'Zara' },
+    { id: 31, type: 'Goat', name: 'Nanny' },
+    { id: 32, type: 'Sheep', name: 'Lamby' },
+    { id: 33, type: 'Cow', name: 'MooMoo' },
+    { id: 34, type: 'Horse', name: 'Shadow' },
+    { id: 35, type: 'Pig', name: 'Bacon' },
+    { id: 36, type: 'Duck', name: 'Daisy' },
+    { id: 37, type: 'Chicken', name: 'Henrietta' },
+    { id: 38, type: 'Turk', name: 'Gobble' },
+    { id: 39, type: 'Alpaca', name: 'Alp' },
+    { id: 40, type: 'Llama', name: 'Lemon' },
+    { id: 41, type: 'Rabbit', name: 'Flopsy' },
+    { id: 42, type: 'Donkey', name: 'Jack' },
+    { id: 43, type: 'Yak', name: 'Yogi' },
+    { id: 44, type: 'Bison', name: 'Buffalo' },
+    { id: 45, type: 'Goose', name: 'Greta' },
+    { id: 46, type: 'Peafowl', name: 'Peacock' },
+    { id: 47, type: 'Emu', name: 'Ella' },
+    { id: 48, type: 'Ostrich', name: 'Opal' },
+    { id: 49, type: 'Pheasant', name: 'Parker' },
+    { id: 50, type: 'Ferret', name: 'Freddy' },
+    { id: 51, type: 'Swan', name: 'Samantha' },
+    { id: 52, type: 'Capybara', name: 'Cappy' },
+    { id: 53, type: 'Cavy', name: 'Puff' },
+    { id: 54, type: 'Kangaroo', name: 'Kiki' },
+    { id: 55, type: 'Wallaby', name: 'Wanda' },
+    { id: 56, type: 'Mule', name: 'Max' },
+    { id: 57, type: 'Zebra', name: 'Ziggy' },
+    { id: 58, type: 'Bunny', name: 'Binky' },
+    { id: 59, type: 'Cattle', name: 'Clarabelle' },
+    { id: 60, type: 'Saddleback Pig', name: 'Saddler' },
+    { id: 61, type: 'Suffolk Sheep', name: 'Suffi' },
+    { id: 62, type: 'Dairy Goat', name: 'Daisy' },
+    { id: 63, type: 'Hereford Cow', name: 'Harry' },
+    { id: 64, type: 'Duroc Pig', name: 'Duro' },
+    { id: 65, type: 'Rhode Island Red Chicken', name: 'Rudy' },
+    { id: 66, type: 'Leghorn Chicken', name: 'Leghorn' },
+    { id: 67, type: 'Plymouth Rock Chicken', name: 'Ply' },
+    { id: 68, type: 'Cornish Hen', name: 'Corny' },
+    { id: 69, type: 'Guinea Fowl', name: 'Gus' },
+    { id: 70, type: 'Angora Rabbit', name: 'Angie' },
+    { id: 71, type: 'Belgian Hare', name: 'Bella' },
+    { id: 72, type: 'American Cavy', name: 'Cavy' },
+    { id: 73, type: 'Pygmy Goat', name: 'Pygmy' },
+    { id: 74, type: 'Nubian Goat', name: 'Nub' },
+    { id: 75, type: 'Tennessee Walking Horse', name: 'Tennessee' },
+    { id: 76, type: 'Appaloosa Horse', name: 'Appy' },
+    { id: 77, type: 'Arabian Horse', name: 'Arab' },
+    { id: 78, type: 'Thoroughbred Horse', name: 'Thorough' },
+    { id: 79, type: 'Clydesdale Horse', name: 'Clyde' },
+    { id: 80, type: 'Shire Horse', name: 'Shirley' },
+    { id: 81, type: 'Miniature Horse', name: 'Mini' },
+    { id: 82, type: 'Shetland Pony', name: 'Shelly' },
+    { id: 83, type: 'Percheron Horse', name: 'Percy' },
+    { id: 84, type: 'Belgian Horse', name: 'Belly' },
+    { id: 85, type: 'Mangalarga Horse', name: 'Manga' },
+    { id: 86, type: 'Paint Horse', name: 'Painty' },
+    { id: 87, type: 'Burmese Goat', name: 'Burm' },
+    { id: 88, type: 'Brahman Cattle', name: 'Brahma' },
+    { id: 89, type: 'Angus Cattle', name: 'Angus' },
+    { id: 90, type: 'Ayrshire Cattle', name: 'Ayr' },
+    { id: 91, type: 'Guernsey Cattle', name: 'Guernsey' },
+    { id: 92, type: 'Jersey Cattle', name: 'Jersey' },
+    { id: 93, type: 'Charolais Cattle', name: 'Charlie' },
+    { id: 94, type: 'Simmental Cattle', name: 'Simmy' },
+    { id: 95, type: 'Limousin Cattle', name: 'Limo' },
+    { id: 96, type: 'Red Poll Cattle', name: 'Red' },
+    { id: 97, type: 'Shorthorn Cattle', name: 'Shorn' },
+    { id: 98, type: 'Aberdeen Angus Cattle', name: 'Aber' },
+    { id: 99, type: 'Kerry Cattle', name: 'Kerry' },
+    { id: 100, type: 'Dexter Cattle', name: 'Dex' },
+    { id: 101, type: 'British Blue Goat', name: 'Blue' },
+    { id: 102, type: 'Saanen Goat', name: 'Saan' },
+    { id: 103, type: 'Toggenburg Goat', name: 'Tog' },
+    { id: 104, type: 'Saanen Goat', name: 'Saan' },
+    { id: 105, type: 'Nigerian Dwarf Goat', name: 'Nige' },
+    { id: 106, type: 'Spanish Goat', name: 'Spain' },
+    { id: 107, type: 'Kiko Goat', name: 'Kiki' },
+    { id: 108, type: 'Oberhasli Goat', name: 'Ober' },
+    { id: 109, type: 'Alpine Goat', name: 'Alp' },
+    { id: 110, type: 'Toggenburg Goat', name: 'Tog' },
+    { id: 111, type: 'Nubian Goat', name: 'Nub' },
+    { id: 112, type: 'Pygmy Goat', name: 'Pygmy' },
+    { id: 113, type: 'Boer Goat', name: 'Boer' },
+    { id: 114, type: 'Tamworth Pig', name: 'Tammy' },
+    { id: 115, type: 'Gloucestershire Old Spot Pig', name: 'Spot' },
+    { id: 116, type: 'Landrace Pig', name: 'Land' },
+    { id: 117, type: 'Yorkshire Pig', name: 'Yorky' },
+    { id: 118, type: 'Berkshire Pig', name: 'Berk' },
+    { id: 119, type: 'Chester White Pig', name: 'Chester' },
+    { id: 120, type: 'Large Black Pig', name: 'Blacky' },
+];
+
+
+        const employeesData = [
+    { id: 1, name: 'John', surname: 'Doe', contact: '123456789', address: '123 Farm Lane', position: 'Manager', gender: 'Male', race: 'White', idNumber: '001' },
+    { id: 2, name: 'Jane', surname: 'Smith', contact: '987654321', address: '456 Rural Rd', position: 'Worker', gender: 'Female', race: 'Black', idNumber: '002' },
+    { id: 3, name: 'Michael', surname: 'Johnson', contact: '234567890', address: '789 Country St', position: 'Supervisor', gender: 'Male', race: 'Asian', idNumber: '003' },
+    { id: 4, name: 'Emily', surname: 'Davis', contact: '345678901', address: '101 Woodland Ave', position: 'Worker', gender: 'Female', race: 'Hispanic', idNumber: '004' },
+    { id: 5, name: 'William', surname: 'Brown', contact: '456789012', address: '202 Meadow Dr', position: 'Manager', gender: 'Male', race: 'White', idNumber: '005' },
+    { id: 6, name: 'Olivia', surname: 'Garcia', contact: '567890123', address: '303 Valley View', position: 'Worker', gender: 'Female', race: 'Hispanic', idNumber: '006' },
+    { id: 7, name: 'James', surname: 'Martinez', contact: '678901234', address: '404 River Rd', position: 'Supervisor', gender: 'Male', race: 'Black', idNumber: '007' },
+    { id: 8, name: 'Sophia', surname: 'Lopez', contact: '789012345', address: '505 Ocean Blvd', position: 'Worker', gender: 'Female', race: 'Asian', idNumber: '008' },
+    { id: 9, name: 'Benjamin', surname: 'Wilson', contact: '890123456', address: '606 Hilltop Ct', position: 'Manager', gender: 'Male', race: 'White', idNumber: '009' },
+    { id: 10, name: 'Isabella', surname: 'Anderson', contact: '901234567', address: '707 Sunrise Ave', position: 'Worker', gender: 'Female', race: 'Hispanic', idNumber: '010' },
+    { id: 11, name: 'Lucas', surname: 'Thomas', contact: '012345678', address: '808 Sunset Blvd', position: 'Supervisor', gender: 'Male', race: 'Black', idNumber: '011' },
+    { id: 12, name: 'Mia', surname: 'Taylor', contact: '123450987', address: '909 Pine St', position: 'Worker', gender: 'Female', race: 'Asian', idNumber: '012' },
+    { id: 13, name: 'Ethan', surname: 'Moore', contact: '234561098', address: '111 Birch St', position: 'Manager', gender: 'Male', race: 'White', idNumber: '013' },
+    { id: 14, name: 'Ava', surname: 'Jackson', contact: '345672109', address: '222 Maple Rd', position: 'Worker', gender: 'Female', race: 'Hispanic', idNumber: '014' },
+    { id: 15, name: 'Matthew', surname: 'White', contact: '456783210', address: '333 Cedar Dr', position: 'Supervisor', gender: 'Male', race: 'Black', idNumber: '015' },
+    { id: 16, name: 'Charlotte', surname: 'Harris', contact: '567894321', address: '444 Spruce St', position: 'Worker', gender: 'Female', race: 'Asian', idNumber: '016' },
+    { id: 17, name: 'Daniel', surname: 'Martin', contact: '678905432', address: '555 Elm St', position: 'Manager', gender: 'Male', race: 'White', idNumber: '017' },
+    { id: 18, name: 'Amelia', surname: 'Thompson', contact: '789016543', address: '666 Cherry Ln', position: 'Worker', gender: 'Female', race: 'Hispanic', idNumber: '018' },
+    { id: 19, name: 'Jacob', surname: 'Garcia', contact: '890127654', address: '777 Oak Ave', position: 'Supervisor', gender: 'Male', race: 'Black', idNumber: '019' },
+    { id: 20, name: 'Ella', surname: 'Martinez', contact: '901238765', address: '888 Ash Ct', position: 'Worker', gender: 'Female', race: 'Asian', idNumber: '020' },
+    { id: 21, name: 'Jackson', surname: 'Rodriguez', contact: '012349876', address: '999 Birch Ln', position: 'Manager', gender: 'Male', race: 'White', idNumber: '021' },
+    { id: 22, name: 'Sofia', surname: 'Lee', contact: '123450987', address: '123 Palm St', position: 'Worker', gender: 'Female', race: 'Hispanic', idNumber: '022' },
+    { id: 23, name: 'Aiden', surname: 'Walker', contact: '234561098', address: '234 Bamboo Rd', position: 'Supervisor', gender: 'Male', race: 'Black', idNumber: '023' },
+    { id: 24, name: 'Grace', surname: 'Hall', contact: '345672109', address: '345 Maple Dr', position: 'Worker', gender: 'Female', race: 'Asian', idNumber: '024' },
+    { id: 25, name: 'Henry', surname: 'Young', contact: '456783210', address: '456 Pine St', position: 'Manager', gender: 'Male', race: 'White', idNumber: '025' },
+    { id: 26, name: 'Chloe', surname: 'Hernandez', contact: '567894321', address: '567 Cedar Ln', position: 'Worker', gender: 'Female', race: 'Hispanic', idNumber: '026' },
+    { id: 27, name: 'Elijah', surname: 'King', contact: '678905432', address: '678 Spruce St', position: 'Supervisor', gender: 'Male', race: 'Black', idNumber: '027' },
+    { id: 28, name: 'Scarlett', surname: 'Wright', contact: '789016543', address: '789 Oak Ave', position: 'Worker', gender: 'Female', race: 'Asian', idNumber: '028' },
+    { id: 29, name: 'Jack', surname: 'Scott', contact: '890127654', address: '890 Ash Ct', position: 'Manager', gender: 'Male', race: 'White', idNumber: '029' },
+    { id: 30, name: 'Zoe', surname: 'Torres', contact: '901238765', address: '901 Birch Ln', position: 'Worker', gender: 'Female', race: 'Hispanic', idNumber: '030' },
+    { id: 31, name: 'Samuel', surname: 'Nguyen', contact: '012349876', address: '112 Palm St', position: 'Supervisor', gender: 'Male', race: 'Black', idNumber: '031' },
+    { id: 32, name: 'Maya', surname: 'Peterson', contact: '123450987', address: '223 Bamboo Rd', position: 'Worker', gender: 'Female', race: 'Asian', idNumber: '032' },
+    { id: 33, name: 'Carter', surname: 'Baker', contact: '234561098', address: '334 Maple Dr', position: 'Manager', gender: 'Male', race: 'White', idNumber: '033' },
+    { id: 34, name: 'Natalie', surname: 'Gonzalez', contact: '345672109', address: '445 Cedar Ln', position: 'Worker', gender: 'Female', race: 'Hispanic', idNumber: '034' },
+    { id: 35, name: 'Isaac', surname: 'Nelson', contact: '456783210', address: '556 Spruce St', position: 'Supervisor', gender: 'Male', race: 'Black', idNumber: '035' },
+    { id: 36, name: 'Lily', surname: 'Carter', contact: '567894321', address: '667 Oak Ave', position: 'Worker', gender: 'Female', race: 'Asian', idNumber: '036' },
+    { id: 37, name: 'Wyatt', surname: 'Mitchell', contact: '678905432', address: '778 Ash Ct', position: 'Manager', gender: 'Male', race: 'White', idNumber: '037' },
+    { id: 38, name: 'Hannah', surname: 'Perez', contact: '789016543', address: '889 Birch Ln', position: 'Worker', gender: 'Female', race: 'Hispanic', idNumber: '038' },
+    { id: 39, name: 'Owen', surname: 'Roberts', contact: '890127654', address: '990 Palm St', position: 'Supervisor', gender: 'Male', race: 'Black', idNumber: '039' },
+    { id: 40, name: 'Aria', surname: 'Turner', contact: '901238765', address: '101 Bamboo Rd', position: 'Worker', gender: 'Female', race: 'Asian', idNumber: '040' },
+    { id: 41, name: 'Henry', surname: 'Phillips', contact: '012349876', address: '202 Maple Dr', position: 'Manager', gender: 'Male', race: 'White', idNumber: '041' },
+    { id: 42, name: 'Sadie', surname: 'Campbell', contact: '123450987', address: '303 Cedar Ln', position: 'Worker', gender: 'Female', race: 'Hispanic', idNumber: '042' },
+    { id: 43, name: 'Dylan', surname: 'Parker', contact: '234561098', address: '404 Spruce St', position: 'Supervisor', gender: 'Male', race: 'Black', idNumber: '043' },
+    { id: 44, name: 'Victoria', surname: 'Evans', contact: '345672109', address: '505 Oak Ave', position: 'Worker', gender: 'Female', race: 'Asian', idNumber: '044' },
+    { id: 45, name: 'Levi', surname: 'Edwards', contact: '456783210', address: '606 Ash Ct', position: 'Manager', gender: 'Male', race: 'White', idNumber: '045' },
+    { id: 46, name: 'Scarlett', surname: 'Collins', contact: '567894321', address: '707 Birch Ln', position: 'Worker', gender: 'Female', race: 'Hispanic', idNumber: '046' },
+    { id: 47, name: 'Gabriel', surname: 'Stewart', contact: '678905432', address: '808 Palm St', position: 'Supervisor', gender: 'Male', race: 'Black', idNumber: '047' },
+    { id: 48, name: 'Luna', surname: 'Sanchez', contact: '789016543', address: '909 Bamboo Rd', position: 'Worker', gender: 'Female', race: 'Asian', idNumber: '048' },
+    { id: 49, name: 'Caleb', surname: 'Morris', contact: '890127654', address: '123 Maple Dr', position: 'Manager', gender: 'Male', race: 'White', idNumber: '049' },
+    { id: 50, name: 'Peyton', surname: 'Rogers', contact: '901238765', address: '234 Cedar Ln', position: 'Worker', gender: 'Female', race: 'Hispanic', idNumber: '050' },
+    { id: 51, name: 'Jordan', surname: 'Reed', contact: '012349876', address: '345 Spruce St', position: 'Supervisor', gender: 'Male', race: 'Black', idNumber: '051' },
+    { id: 52, name: 'Audrey', surname: 'Cook', contact: '123450987', address: '456 Oak Ave', position: 'Worker', gender: 'Female', race: 'Asian', idNumber: '052' },
+    { id: 53, name: 'Hudson', surname: 'Brooks', contact: '234561098', address: '567 Ash Ct', position: 'Manager', gender: 'Male', race: 'White', idNumber: '053' },
+    { id: 54, name: 'Avery', surname: 'Price', contact: '345672109', address: '678 Birch Ln', position: 'Worker', gender: 'Female', race: 'Hispanic', idNumber: '054' },
+    { id: 55, name: 'Jaxon', surname: 'Wood', contact: '456783210', address: '789 Palm St', position: 'Supervisor', gender: 'Male', race: 'Black', idNumber: '055' },
+    { id: 56, name: 'Ellie', surname: 'Watson', contact: '567894321', address: '890 Bamboo Rd', position: 'Worker', gender: 'Female', race: 'Asian', idNumber: '056' },
+    { id: 57, name: 'Miles', surname: 'Bell', contact: '678905432', address: '901 Maple Dr', position: 'Manager', gender: 'Male', race: 'White', idNumber: '057' },
+    { id: 58, name: 'Naomi', surname: 'Hernandez', contact: '789016543', address: '112 Cedar Ln', position: 'Worker', gender: 'Female', race: 'Hispanic', idNumber: '058' },
+    { id: 59, name: 'Isaiah', surname: 'Gonzalez', contact: '890127654', address: '223 Spruce St', position: 'Supervisor', gender: 'Male', race: 'Black', idNumber: '059' },
+    { id: 60, name: 'Madeline', surname: 'Cruz', contact: '901238765', address: '334 Oak Ave', position: 'Worker', gender: 'Female', race: 'Asian', idNumber: '060' },
+    { id: 61, name: 'Christian', surname: 'Ortega', contact: '012349876', address: '445 Ash Ct', position: 'Manager', gender: 'Male', race: 'White', idNumber: '061' },
+    { id: 62, name: 'Lydia', surname: 'Little', contact: '123450987', address: '556 Birch Ln', position: 'Worker', gender: 'Female', race: 'Hispanic', idNumber: '062' },
+    { id: 63, name: 'Eli', surname: 'Wright', contact: '234561098', address: '667 Palm St', position: 'Supervisor', gender: 'Male', race: 'Black', idNumber: '063' },
+    { id: 64, name: 'Sarah', surname: 'Parker', contact: '345672109', address: '778 Bamboo Rd', position: 'Worker', gender: 'Female', race: 'Asian', idNumber: '064' },
+    { id: 65, name: 'Logan', surname: 'Foster', contact: '456783210', address: '889 Maple Dr', position: 'Manager', gender: 'Male', race: 'White', idNumber: '065' },
+    { id: 66, name: 'Ella', surname: 'Kelly', contact: '567894321', address: '990 Cedar Ln', position: 'Worker', gender: 'Female', race: 'Hispanic', idNumber: '066' },
+    { id: 67, name: 'Aaron', surname: 'Wagner', contact: '678905432', address: '101 Spruce St', position: 'Supervisor', gender: 'Male', race: 'Black', idNumber: '067' },
+    { id: 68, name: 'Megan', surname: 'Hoffman', contact: '789016543', address: '202 Oak Ave', position: 'Worker', gender: 'Female', race: 'Asian', idNumber: '068' },
+    { id: 69, name: 'Chase', surname: 'Murray', contact: '890127654', address: '303 Ash Ct', position: 'Manager', gender: 'Male', race: 'White', idNumber: '069' },
+    { id: 70, name: 'Julia', surname: 'Rivera', contact: '901238765', address: '404 Birch Ln', position: 'Worker', gender: 'Female', race: 'Hispanic', idNumber: '070' },
+    { id: 71, name: 'Cole', surname: 'Hanson', contact: '012349876', address: '505 Palm St', position: 'Supervisor', gender: 'Male', race: 'Black', idNumber: '071' },
+    { id: 72, name: 'Natalia', surname: 'Harris', contact: '123450987', address: '606 Bamboo Rd', position: 'Worker', gender: 'Female', race: 'Asian', idNumber: '072' },
+    { id: 73, name: 'Tristan', surname: 'Hughes', contact: '234561098', address: '707 Maple Dr', position: 'Manager', gender: 'Male', race: 'White', idNumber: '073' },
+    { id: 74, name: 'Samantha', surname: 'Coleman', contact: '345672109', address: '808 Cedar Ln', position: 'Worker', gender: 'Female', race: 'Hispanic', idNumber: '074' },
+    { id: 75, name: 'Zachary', surname: 'Ramos', contact: '456783210', address: '909 Spruce St', position: 'Supervisor', gender: 'Male', race: 'Black', idNumber: '075' },
+    { id: 76, name: 'Hannah', surname: 'Sanders', contact: '567894321', address: '101 Oak Ave', position: 'Worker', gender: 'Female', race: 'Asian', idNumber: '076' },
+    { id: 77, name: 'Aaron', surname: 'George', contact: '678905432', address: '202 Ash Ct', position: 'Manager', gender: 'Male', race: 'White', idNumber: '077' },
+    { id: 78, name: 'Clara', surname: 'Cox', contact: '789016543', address: '303 Birch Ln', position: 'Worker', gender: 'Female', race: 'Hispanic', idNumber: '078' },
+    { id: 79, name: 'Aiden', surname: 'Morris', contact: '890127654', address: '404 Palm St', position: 'Supervisor', gender: 'Male', race: 'Black', idNumber: '079' },
+    { id: 80, name: 'Stella', surname: 'Wells', contact: '901238765', address: '505 Bamboo Rd', position: 'Worker', gender: 'Female', race: 'Asian', idNumber: '080' },
+    { id: 81, name: 'Julian', surname: 'Price', contact: '012349876', address: '606 Maple Dr', position: 'Manager', gender: 'Male', race: 'White', idNumber: '081' },
+    { id: 82, name: 'Aurora', surname: 'Russell', contact: '123450987', address: '707 Cedar Ln', position: 'Worker', gender: 'Female', race: 'Hispanic', idNumber: '082' },
+    { id: 83, name: 'Leo', surname: 'Harrison', contact: '234561098', address: '808 Spruce St', position: 'Supervisor', gender: 'Male', race: 'Black', idNumber: '083' },
+    { id: 84, name: 'Ellie', surname: 'Jenkins', contact: '345672109', address: '909 Oak Ave', position: 'Worker', gender: 'Female', race: 'Asian', idNumber: '084' },
+    { id: 85, name: 'Nolan', surname: 'James', contact: '456783210', address: '101 Ash Ct', position: 'Manager', gender: 'Male', race: 'White', idNumber: '085' },
+    { id: 86, name: 'Scarlett', surname: 'Vasquez', contact: '567894321', address: '202 Birch Ln', position: 'Worker', gender: 'Female', race: 'Hispanic', idNumber: '086' },
+    { id: 87, name: 'Diego', surname: 'Hernandez', contact: '678905432', address: '303 Palm St', position: 'Supervisor', gender: 'Male', race: 'Black', idNumber: '087' },
+];
+
+
+        // Load crops data into the crops table
+        const cropsTableBody = document.getElementById('crops-table-body');
+        cropsData.forEach(crop => {
+            const row = document.createElement('tr');
+            row.innerHTML = `<td>${crop.id}</td><td>${crop.name}</td>`;
+            cropsTableBody.appendChild(row);
+        });
+
+        // Load livestock data into the livestock table
+        const livestockTableBody = document.getElementById('livestock-table-body');
+        livestockData.forEach(livestock => {
+            const row = document.createElement('tr');
+            row.innerHTML = `<td>${livestock.id}</td><td>${livestock.type}</td><td>${livestock.name}</td>`;
+            livestockTableBody.appendChild(row);
+        });
+
+        // Load employees data into the employees table
+        const employeesTableBody = document.getElementById('employees-table-body');
+        employeesData.forEach(employee => {
+            const row = document.createElement('tr');
+            row.innerHTML = `<td>${employee.id}</td><td>${employee.name}</td><td>${employee.surname}</td><td>${employee.contact}</td><td>${employee.address}</td><td>${employee.position}</td><td>${employee.gender}</td><td>${employee.race}</td><td>${employee.idNumber}</td>`;
+            employeesTableBody.appendChild(row);
+        });
+
+        // Your other custom JS code for charts, etc.
+    </script>
+     <!-- Footer -->
+     <footer class="text-center ">
+        <p class="translate" data-translate="footerText">&copy; 2024 FMS Inventory. All Rights Reserved.</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="user_dash.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="settings.js"></script>
+
+    <title>dashboard</title>
+</head>
+<body>
+    <div class="dashboard">
+        <aside class="sidebar">
+            <h2><i class="fas fa-tractor"></i> Farming Management System</h2>
+            <nav>
+                <ul>
+                    <li><a href="../user_dashboard/user_dash.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                    <li><a href="../Fields/fields.html"><i class="fas fa-map-marked-alt"></i> Fields</a>
+                    <li><a href="../order/index.html"><i class="fas fa-boxes"></i> Orders</a></li>
+                    <li>><a href="../products/products.html"><i class="fas fa-tasks"></i> Products</a></li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="../Helpmate-AI-main/index.html"><i class="fas fa-headset"></i> Support</a>
+                <a href="settings.html"><i class="fas fa-cogs"></i> Settings</a>
+                
+                <button class="signout-button" onclick="window.location.href='../home/home.html'">Sign Out</button>
+            </div>
+        </aside>
+        <main class="main-content">
+            <header>
+                <div class="search-language">
+                    <input type="text" placeholder="Search here..." id="search-bar">
+                    <button id="search-btn"><i class="fas fa-search"></i></button>
+                    <select id="language-select">
+                        <option value="en">English</option>
+                        <option value="st">Sesotho</option>
+                        <option value="zu">Zulu</option>
+                        <option value="zh">Chinese</option>
+                        <option value="fr">French</option>
+                        <option value="af">Afrikaans</option>
+                    </select>
+                </div>
+
+                <div class="user-profile">
+                    <span id="user-name">Hi, Username</span>
+                   
+                    <i class="fas fa-user-circle"></i>
+                    <div class="dropdown">
+                        <button class="dropbtn" onclick="toggleDropdown()">Profile <i class="fas fa-caret-down"></i></button>
+                        <div class="dropdown-content" id="dropdown-content">
+                            <a href="#" id="edit-profile">Edit Profile</a>
+                            <div id="edit-profile-form" style="display: none;">
+                                <h3>Edit Personal Data</h3>
+                                <label for="first-name">First Name:</label>
+                                <input type="text" id="first-name" required>
+                
+                                <label for="surname">Surname:</label>
+                                <input type="text" id="surname" required>
+                
+                                <label for="contact">Contact:</label>
+                                <input type="text" id="contact" required>
+                
+                                <label for="address">Address:</label>
+                                <input type="text" id="address" required>
+                
+                                <label for="account-number">Account Number:</label>
+                                <input type="text" id="account-number" required>
+                
+                                <button id="save-profile">Save Changes</button>
+                            </div>
+                            <a href="#" id="change-picture">Change Picture</a>
+                            <a href="#" id="sign-out">Sign Out</a>
+                        </div>
+                    </div>
+                </div>
+                
+                    
+            </header>
+            <section class="stats-overview">
+                <div class="stat-card"><i class="fas fa-seedling"> 
+                    <!--<img src="../livestock/livestock1.jpg" alt="Livestock 1">-->
+                </i> 300 Total Crops</div>
+                <div class="stat-card"><i class="fas fa-paw"></i> 120 Total Livestock</div>
+                <div class="stat-card"><i class="fas fa-users"></i> 85 Total Employees</div>
+            </section>
+            <section class="charts">
+                <div id="revenue-chart" class="chart"></div>
+                <div id="yield-chart" class="chart"></div>
+                <div id="top-products-chart" class="chart"></div>
+                <div id="soil-moisture-chart" class="chart"></div>
+            </section>
+            <section class="tasks-weather">
+                <div id="tasks" class="tasks">
+                    <h3><i class="fas fa-tasks"></i> Tasks</h3>
+                    <ul>
+                        <li>Check Field A Crops - <i class="fas fa-check-circle"></i> Completed</li>
+                        <li>Trim Farm Area - <i class="fas fa-spinner"></i> In Progress</li>
+                        <li>Assemble Tools - <i class="fas fa-times-circle"></i> Incomplete</li>
+                    </ul>
+                </div>
+                <div id="weather" class="weather">
+                    <h3><i class="fas fa-cloud-sun"></i> Weather</h3>
+                    <p><i class="fas fa-calendar-day"></i> Tuesday</p>
+                    <p><i class="fas fa-thermometer-half"></i> 20°C, Sunny</p>
+                    <p><i class="fas fa-tint"></i> Precipitation: 0%</p>
+                    <p><i class="fas fa-water"></i> Humidity: 50%</p>
+                </div>
+            </section>
+         
+            
+        </main>
+    </div>
+    <script src="user_dash.js"></script>
+    <script src="static/js/main.js"></script>
+</body>
+</html>
