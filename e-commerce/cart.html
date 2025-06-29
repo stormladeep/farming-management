@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        h1, h2, h3, h4, p {
+            margin: 10px 0;
+        }
+
+        a {
+            text-decoration: none;
+            color: #333;
+        }
+
+        a:hover {
+            color: #007bff;
+        }
+
+        /* Navbar Styles */
+        .nav-bar {
+            background-color: #28a745; /* Changed to green */
+            color: white;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-bar h1 {
+            margin: 0;
+        }
+
+        .nav-bar ul {
+            list-style-type: none;
+            display: flex;
+            gap: 15px;
+        }
+
+        .nav-bar ul li {
+            display: inline;
+        }
+
+        .nav-bar ul li a {
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+        }
+
+        .nav-bar ul li a:hover {
+            background-color: #007bff;
+        }
+
+        /* Cart Styles */
+        .cart {
+            width: 80%;
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        .cart h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #007bff;
+        }
+
+        /* Cart Table Styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ccc;
+        }
+
+        th {
+            background-color: #28a745; /* Header background color */
+            color: white;
+        }
+
+        /* Button Styles */
+        button {
+            background-color: #28a745; /* Green background */
+            color: white;
+            border: none;
+            padding: 15px 30px; /* Increased padding for larger size */
+            font-size: 1.2em; /* Increased font size */
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #ffa500; /* Orange hover background */
+        }
+
+        /* Footer Styles */
+        footer {
+            background-color: #28a745; /* Changed to green */
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            position: absolute;
+            width: 100%;
+            bottom: 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="nav-bar">
+            <h1>My Store</h1>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="crops.html">Crops</a></li>
+                    <li><a href="livestock.html">Livestock</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="cart">
+        <h2>Your Cart</h2>
+        <table id="cartTable">
+            <thead>
+                <tr>
+                    <th>Item</th>
+                    <th>Price (R)</th>
+                    <th>Quantity</th>
+                    <th>Total (R)</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="cartItems">
+                <!-- Cart items will be dynamically inserted here -->
+            </tbody>
+        </table>
+        <button onclick="checkout()">Proceed to Checkout</button>
+        <button onclick="proceedShopping()">Proceed Shopping</button>
+    </section>
+
+    <footer>
+        <p>© 2024 My Store. All rights reserved.</p>
+    </footer>
+
+    <script src="app.js"></script>
+    <script>
+        function updateCartUI() {
+            let cartItems = document.getElementById('cartItems');
+            cartItems.innerHTML = '';
+
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+            if (cart.length === 0) {
+                cartItems.innerHTML = `<tr><td colspan="5">Your cart is empty.</td></tr>`;
+            } else {
+                cart.forEach((product, index) => {
+                    let itemRow = document.createElement('tr');
+                    itemRow.innerHTML = `
+                        <td>${product.name}</td>
+                        <td>R ${product.price}.00</td>
+                        <td>${product.quantity}</td>
+                        <td>R ${product.price * product.quantity}.00</td>
+                        <td><button onclick="removeFromCart(${index})">Remove</button></td>
+                    `;
+                    cartItems.appendChild(itemRow);
+                });
+            }
+        }
+
+        function removeFromCart(index) {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            cart.splice(index, 1);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartUI();
+        }
+
+        function checkout() {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            if (cart.length === 0) {
+                alert('Your cart is empty!');
+                return;
+            }
+            alert('Proceeding to checkout...');
+        }
+
+        function proceedShopping() {
+            window.location.href = "../products/products.html"; // Replace with the actual path to your products page
+        }
+
+        // Call this function initially to display the cart content
+        updateCartUI();
+    </script>
+</body>
+</html>

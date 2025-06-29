@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Crops Store</title>
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .header {
+            background-color: #28a745; /* Green header */
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .card img {
+            width: 100%;
+            height: 200px; /* Adjusted height */
+            transition: transform 0.3s;
+        }
+
+        .card:hover img {
+            transform: scale(1.1); /* Image pop effect */
+        }
+
+        .footer {
+            background-color: #28a745; /* Green footer */
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .buy-now-btn {
+            background-color: #28a745; /* Green button */
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        .buy-now-btn:hover {
+            background-color: #218838; /* Darker green on hover */
+        }
+
+        /* Custom styles for navbar */
+        .navbar {
+            margin-bottom: 20px;
+        }
+
+        #searchInput {
+            width: 300px;
+            margin-right: 10px;
+        }
+
+        .cart-count {
+            background-color: gray;
+            border-radius: 50%;
+            padding: 5px 10px;
+            position: relative;
+            top: -10px;
+            right: -10px;
+            font-weight: bold;
+        }
+
+        /* Cart Table Styles */
+        #cartTable {
+            display: none; /* Hide the cart by default */
+            margin-top: 20px;
+        }
+
+        #cartTable table {
+            width: 100%;
+            background-color: white;
+        }
+
+        #cartTable th,
+        #cartTable td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+
+        /* Invoice Section */
+        #invoiceSection {
+            display: none; /* Hide invoice by default */
+            margin-top: 30px;
+        }
+
+        .invoice-popup {
+            display: none;
+            position: fixed;
+            top: 20%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            border: 1px solid #ddd;
+            z-index: 9999;
+            width: 50%;
+            max-width: 600px;
+        }
+
+        .invoice-popup h3 {
+            margin-bottom: 20px;
+        }
+
+        .invoice-popup .close-btn {
+            background-color: red;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="header">
+        <h1>Crops Store</h1>
+        <h3>Your one-stop shop for fresh crops!</h3>
+    </header>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Crops Store</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="../E-commrce/products.html">Main</a>
+                </li>
+            </ul>
+            <form class="form-inline ml-auto" onsubmit="handleSearch(event)">
+                <input class="form-control" type="search" id="searchInput" placeholder="Search crops..." aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+            <button class="btn btn-outline-warning ml-3" onclick="toggleCart()">
+                Cart <span class="cart-count" id="cartCount">0</span>
+            </button>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <!-- Products section goes here (Vegetables, Fruits, Grains) -->
+        <!-- Vegetables Section -->
+        <h2>Vegetables</h2>
+        <div class="row">
+            <!-- Vegetable Card 1 -->
+            <div class="col-md-3">
+                <div class="card">
+                    <img src="./vegetable1.jpg" alt="Vegetable 1">
+                    <div class="card-body">
+                        <h5 class="card-title">Spinach</h5>
+                        <p class="card-text">Price: R50</p>
+                        <p class="card-text">Availability: In Stock</p>
+                        <button class="buy-now-btn" onclick="addToCart('Spinach', 50)">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Vegetable Card 2 -->
+            <div class="col-md-3">
+                <div class="card">
+                    <img src="./vegetable2.jpg" alt="Vegetable 2">
+                    <div class="card-body">
+                        <h5 class="card-title">Tomatoes</h5>
+                        <p class="card-text">Price: R60</p>
+                        <p class="card-text">Availability: In Stock</p>
+                        <button class="buy-now-btn" onclick="addToCart('Tomatoes', 60)">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Vegetable Card 3 -->
+            <div class="col-md-3">
+                <div class="card">
+                    <img src="./vegetable3.jpg" alt="Vegetable 3">
+                    <div class="card-body">
+                        <h5 class="card-title">Bell Peppers</h5>
+                        <p class="card-text">Price: R45</p>
+                        <p class="card-text">Availability: In Stock</p>
+                        <button class="buy-now-btn" onclick="addToCart('Bell Peppers', 45)">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Vegetable Card 4 -->
+            <div class="col-md-3">
+                <div class="card">
+                    <img src="./vegetable4.jpg" alt="Vegetable 4">
+                    <div class="card-body">
+                        <h5 class="card-title">Cucumbers</h5>
+                        <p class="card-text">Price: R70</p>
+                        <p class="card-text">Availability: In Stock</p>
+                        <button class="buy-now-btn" onclick="addToCart('Cucumbers', 70)">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Fruits Section -->
+        <h2 class="mt-4">Fruits</h2>
+        <div class="row">
+            <!-- Fruit Card 1 -->
+            <div class="col-md-3">
+                <div class="card">
+                    <img src="./fruit1.jpg" alt="Fruit 1">
+                    <div class="card-body">
+                        <h5 class="card-title">Oranges</h5>
+                        <p class="card-text">Price: R80</p>
+                        <p class="card-text">Availability: In Stock</p>
+                        <button class="buy-now-btn" onclick="addToCart('Oranges', 80)">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Fruit Card 2 -->
+            <div class="col-md-3">
+                <div class="card">
+                    <img src="./fruit2.jpg" alt="Fruit 2">
+                    <div class="card-body">
+                        <h5 class="card-title">Apples</h5>
+                        <p class="card-text">Price: R90</p>
+                        <p class="card-text">Availability: In Stock</p>
+                        <button class="buy-now-btn" onclick="addToCart('Apples', 90)">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Fruit Card 3 -->
+            <div class="col-md-3">
+                <div class="card">
+                    <img src="./fruit3.jpg" alt="Fruit 3">
+                    <div class="card-body">
+                        <h5 class="card-title">Bananas</h5>
+                        <p class="card-text">Price: R40</p>
+                        <p class="card-text">Availability: In Stock</p>
+                        <button class="buy-now-btn" onclick="addToCart('Bananas', 40)">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Grains Section -->
+        <h2 class="mt-4">Grains</h2>
+        <div class="row">
+            <!-- Grain Card 1 -->
+            <div class="col-md-3">
+                <div class="card">
+                    <img src="./grain1.jpg" alt="Grain 1">
+                    <div class="card-body">
+                        <h5 class="card-title">Wheat</h5>
+                        <p class="card-text">Price: R100</p>
+                        <p class="card-text">Availability: In Stock</p>
+                        <button class="buy-now-btn" onclick="addToCart('Wheat', 100)">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Grain Card 2 -->
+            <div class="col-md-3">
+                <div class="card">
+                    <img src="./grain2.jpg" alt="Grain 2">
+                    <div class="card-body">
+                        <h5 class="card-title">Rice</h5>
+                        <p class="card-text">Price: R110</p>
+                        <p class="card-text">Availability: In Stock</p>
+                        <button class="buy-now-btn" onclick="addToCart('Rice', 110)">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Grain Card 3 -->
+            <div class="col-md-3">
+                <div class="card">
+                    <img src="./grain3.jpg" alt="Grain 3">
+                    <div class="card-body">
+                        <h5 class="card-title">Corn</h5>
+                        <p class="card-text">Price: R90</p>
+                        <p class="card-text">Availability: In Stock</p>
+                        <button class="buy-now-btn" onclick="addToCart('Corn', 90)">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Grain Card 4 -->
+            <div class="col-md-3">
+                <div class="card">
+                    <img src="./grain4.jpg" alt="Grain 4">
+                    <div class="card-body">
+                        <h5 class="card-title">Barley</h5>
+                        <p class="card-text">Price: R80</p>
+                        <p class="card-text">Availability: In Stock</p>
+                        <button class="buy-now-btn" onclick="addToCart('Barley', 80)">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cart Table -->
+        <div id="cartTable">
+            <h3>Your Cart</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Item</th>
+                        <th>Price (R)</th>
+                        <th>Quantity</th>
+                    </tr>
+                </thead>
+                <tbody id="cartItemsBody"></tbody>
+            </table>
+            <button class="btn btn-success mt-3" onclick="generateInvoice()">Generate Invoice</button>
+        </div>
+
+        <!-- Invoice Section -->
+        <div id="invoiceSection" class="container mt-4 p-4 border rounded" style="background-color: #fff;">
+            <h3>Invoice</h3>
+            <div id="invoiceContent"></div>
+            <button class="btn btn-primary mt-3" onclick="pay()">Pay</button>
+            <button class="close-btn btn btn-danger mt-3" onclick="closeInvoice()">Close</button>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>&copy; 2024 Crops Store. All rights reserved.</p>
+    </div>
+
+    <!-- Invoice Popup -->
+    <div class="invoice-popup" id="invoicePopup">
+        <h3>Invoice</h3>
+        <div id="invoicePopupContent"></div>
+        <button class="close-btn" onclick="closeInvoicePopup()">Close</button>
+    </div>
+
+    <script>
+        let cart = []; // Initialize cart as an empty array
+
+        function addToCart(item, price) {
+            const existingItem = cart.find(cartItem => cartItem.name === item);
+            if (existingItem) {
+                existingItem.quantity += 1; // Increase quantity if item already exists
+            } else {
+                cart.push({ name: item, price: price, quantity: 1 }); // Add new item to cart
+            }
+            updateCartDisplay();
+        }
+
+        function updateCartDisplay() {
+            const cartItemsBody = document.getElementById('cartItemsBody');
+            cartItemsBody.innerHTML = ''; // Clear previous cart items
+            let total = 0;
+
+            cart.forEach(cartItem => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${cartItem.name}</td>
+                    <td>${cartItem.price}</td>
+                    <td>${cartItem.quantity}</td>
+                `;
+                cartItemsBody.appendChild(row);
+                total += cartItem.price * cartItem.quantity; // Calculate total
+            });
+
+            const cartCount = document.getElementById('cartCount');
+            cartCount.textContent = cart.length; // Update cart item count
+
+            const cartTable = document.getElementById('cartTable');
+            cartTable.style.display = cart.length > 0 ? 'block' : 'none'; // Show or hide cart
+        }
+
+        function toggleCart() {
+            const cartTable = document.getElementById('cartTable');
+            cartTable.style.display = cartTable.style.display === 'block' ? 'none' : 'block'; // Toggle cart visibility
+        }
+
+        function generateInvoice() {
+            const invoiceContent = document.getElementById('invoiceContent');
+            invoiceContent.innerHTML = ''; // Clear previous invoice content
+            let total = 0;
+
+            cart.forEach(cartItem => {
+                const itemTotal = cartItem.price * cartItem.quantity; // Calculate total for the item
+                invoiceContent.innerHTML += `<p>${cartItem.name}: R${itemTotal} (${cartItem.quantity} @ R${cartItem.price})</p>`;
+                total += itemTotal; // Calculate total
+            });
+
+            invoiceContent.innerHTML += `<h4>Total: R${total}</h4>`;
+            document.getElementById('invoiceSection').style.display = 'block'; // Show invoice
+        }
+
+        function closeInvoice() {
+            document.getElementById('invoiceSection').style.display = 'none'; // Hide invoice
+        }
+
+        function pay() {
+            const invoiceContent = document.getElementById('invoiceContent').innerHTML; // Get invoice content
+            const totalText = invoiceContent.match(/Total: R(\d+)/); // Extract total amount
+            const total = totalText ? totalText[0] : "R0"; // Get total or default to R0
+
+            // Create the invoice text for download
+            const invoiceText = `
+                Invoice Details:
+                -----------------
+                ${invoiceContent.replace(/<[^>]+>/g, '')} // Strip HTML tags for plain text
+                ${total}
+            `;
+
+            // Create a Blob from the invoice text
+            const blob = new Blob([invoiceText], { type: 'text/plain' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'invoice.txt'; // Set the file name
+
+            document.body.appendChild(link); // Append link to the body
+            link.click(); // Trigger the download
+            document.body.removeChild(link); // Remove the link
+
+            alert('Invoice has been downloaded. Thank you for your purchase!'); // Confirmation message
+
+            // Clear the cart and hide the invoice after payment
+            cart = []; // Clear the cart
+            updateCartDisplay(); // Update cart display
+            closeInvoice(); // Close the invoice
+        }
+
+        function handleSearch(event) {
+            event.preventDefault(); // Prevent form submission
+            const query = document.getElementById('searchInput').value.toLowerCase(); // Get the search query
+            const cropCards = document.querySelectorAll('.card'); // Select all crop cards
+
+            cropCards.forEach(card => {
+                const title = card.querySelector('.card-title').textContent.toLowerCase(); // Get title of the crop
+                card.style.display = title.includes(query) ? 'block' : 'none'; // Show or hide based on query
+            });
+        }
+
+        function closeInvoicePopup() {
+            document.getElementById('invoicePopup').style.display = 'none'; // Hide invoice popup
+        }
+    </script>
+</body>
+
+</html>

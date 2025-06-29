@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Livestock - My Store</title>
+    <!-- Bootstrap CDN -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        .card {
+            margin: 15px 0;
+        }
+
+        .card img {
+            max-width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+        .buy-now-btn {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .buy-now-btn:hover {
+            background-color: #218838;
+        }
+        .table-container {
+            margin-top: 20px;
+        }
+
+        .cart-table {
+            margin-top: 30px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .cart-table th,
+        .cart-table td {
+            text-align: center;
+        }
+        #invoice-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 20px;
+    z-index: 1000;
+    display: none;
+}
+
+#invoice-content {
+    width: 300px;
+}
+
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="#">My Store</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="../E-commrce/products.html">Main</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="" class="nav-link">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span class="cart-count" id="cartCount">0</span>
+                        </a>
+                    </li>
+                    <!-- Search Form -->
+                    <li class="nav-item">
+                        <form class="form-inline my-2 my-lg-0" onsubmit="return handleSearch(event)">
+                            <input class="form-control mr-sm-2" type="search" id="searchInput" placeholder="Search" aria-label="Search">
+                            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        
+    </header>
+    
+
+    <div class="container mt-4">
+        <h1 class="text-center">Livestock</h1>
+
+        <!-- Cows Section -->
+        <h2 class="mt-4">Cows</h2>
+        <div class="row">
+            <!-- Cow Card 1 -->
+            <div class="col-md-3">
+                <div class="card">
+                    <img src="./cow1.jpg" alt="Cow 1">
+                    <div class="card-body">
+                        <h5 class="card-title">Simmental</h5>
+                        <p>Gender: Female (Heifer) / Male (Bull).</p>
+                        <p>Females: 1,300-1,600 lbs (590-725 kg).</p>
+                        <p class="card-text">Price: R20,000</p>
+                        <p class="card-text">Availability: In Stock</p>
+                        <button class="buy-now-btn" onclick="addToCart('Cow 1', 1)">Buy Now</button>
+
+                    </div>
+                </div>
+            </div>
+            <!-- Cow Card 2 -->
+            <div class="col-md-3">
+                <div class="card">
+                    <img src="./cow2.jpg" alt="Cow 2">
+                    <div class="card-body">
+                        <h5 class="card-title">Hereford</h5>
+                        <p>Gender: Female (Heifer) / Male (Bull).</p>
+                        <p>Females: 800-1,200 lbs (360-540 kg).</p>
+                        <p class="card-text">Price: R22,000</p>
+                        <p class="card-text">Availability: In Stock</p>
+                        <button class="buy-now-btn" onclick="addToCart('Cow 2')">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Cow Card 3 -->
+            <div class="col-md-3">
+                <div class="card">
+                    <img src="./cow3.jpg" alt="Cow 3">
+                    <div class="card-body">
+                        <h5 class="card-title">Brahman</h5>
+                        <p>Gender: Female (Cow) / Male (Bull).</p>
+                        <p>Males: 1,600-2,200 lbs (725-1,000 kg).</p>
+                        <p class="card-text">Price: R21,500</p>
+                        <p class="card-text">Availability: In Stock</p>
+                        <button class="buy-now-btn" onclick="addToCart('Cow 3')">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Cow Card 4 -->
+            <div class="col-md-3">
+                <div class="card">
+                    <img src="./cow4.jpg" alt="Cow 4">
+                    <div class="card-body">
+                        <h5 class="card-title">Holstein</h5>
+                        <p>Gender: Female (Cow) / Male (Bull).</p>
+                        <p>Females: 800-1,200 lbs (360-540 kg).</p>
+                        <p class="card-text">Price: R19,500</p>
+                        <p class="card-text">Availability: In Stock</p>
+                        <button class="buy-now-btn" onclick="addToCart('Cow 4')">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sheep Section -->
+        <h2 class="mt-4">Sheep</h2>
+        <div class="row">
+            <!-- Sheep Card 1 -->
+            <div class="col-md-3">
+                <div class="card">
+                    <img src="./sheep1.jpg" alt="Sheep 1">
+                    <div class="card-body">
+                        <h5 class="card-title">Merino</h5>
+                        <p class="card-text">Price: R5,000</p>
+                        <p class="card-text">Availability: In Stock</p>
+                        <button class="buy-now-btn" onclick="addToCart('Sheep 1')">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Sheep Card 2 -->
+            <div class="col-md-3">
+                <div class="card">
+                    <img src="./sheep2.jpg" alt="Sheep 2">
+                    <div class="card-body">
+                        <h5 class="card-title">Suffolk</h5>
+                        <p class="card-text">Price: R5,500</p>
+                        <p class="card-text">Availability: In Stock</p>
+                        <button class="buy-now-btn" onclick="addToCart('Sheep 2')">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Sheep Card 3 -->
+            <div class="col-md-3">
+                <div class="card">
+                    <img src="./sheep3.jpg" alt="Sheep 3">
+                    <div class="card-body">
+                        <h5 class="card-title">Dorset</h5>
+                        <p class="card-text">Price: R4,800</p>
+                        <p class="card-text">Availability: In Stock</p>
+                        <button class="buy-now-btn" onclick="addToCart('Sheep 3')">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Sheep Card 4 -->
+            <div class="col-md-3">
+                <div class="card">
+                    <img src="./sheep4.jpg" alt="Sheep 4">
+                    <div class="card-body">
+                        <h5 class="card-title">Hampshire</h5>
+                        <p class="card-text">Price: R5,200</p>
+                        <p class="card-text">Availability: In Stock</p>
+                        <button class="buy-now-btn" onclick="addToCart('Sheep 4')">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Goats Section -->
+        <h2 class="mt-4">Goats</h2>
+        <div class="row">
+            <!-- Goat Card 1 -->
+            <div class="col-md-3">
+                <div class="card">
+                    <img src="./goat1.jpg" alt="Goat 1">
+                    <div class="card-body">
+                        <h5 class="card-title">Nubian</h5>
+                        <p class="card-text">Price: R3,500</p>
+                        <p class="card-text">Availability: In Stock</p>
+                        <button class="buy-now-btn" onclick="addToCart('Goat 1')">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Goat Card 2 -->
+            <div class="col-md-3">
+                <div class="card">
+                    <img src="./goat2.jpg" alt="Goat 2">
+                    <div class="card-body">
+                        <h5 class="card-title">Toggenburg</h5>
+                        <p class="card-text">Price: R3,800</p>
+                        <p class="card-text">Availability: In Stock</p>
+                        <button class="buy-now-btn" onclick="addToCart('Goat 2')">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Goat Card 3 -->
+            <div class="col-md-3">
+                <div class="card">
+                    <img src="./goat3.jpg" alt="Goat 3">
+                    <div class="card-body">
+                        <h5 class="card-title">LaMancha</h5>
+                        <p class="card-text">Price: R3,200</p>
+                        <p class="card-text">Availability: In Stock</p>
+                        <button class="buy-now-btn" onclick="addToCart('Goat 3')">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Goat Card 4 -->
+            <div class="col-md-3">
+                <div class="card">
+                    <img src="./goat4.jpg" alt="Goat 4">
+                    <div class="card-body">
+                        <h5 class="card-title"> Saanen</h5>
+                        <p class="card-text">Price: R3,000</p>
+                        <p class="card-text">Availability: In Stock</p>
+                        <button class="buy-now-btn" onclick="addToCart('Goat 4')">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Poultry Section -->
+        <h2 class="mt-4">Poultry</h2>
+        <div class="row">
+            <!-- Poultry Card 1 -->
+            <div class="col-md-3">
+                <div class="card">
+                    <img src="./poultry1.jpg" alt="Poultry 1">
+                    <div class="card-body">
+                        <h5 class="card-title"> Rhode Island Red</h5>
+                        <p class="card-text">Price: R200</p>
+                        <p class="card-text">Availability: In Stock</p>
+                        <button class="buy-now-btn" onclick="addToCart('Poultry 1')">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Poultry Card 2 -->
+            <div class="col-md-3">
+                <div class="card">
+                    <img src="./poultry2.jpg" alt="Poultry 2">
+                    <div class="card-body">
+                        <h5 class="card-title"> Sussex</h5>
+                        <p class="card-text">Price: R220</p>
+                        <p class="card-text">Availability: In Stock</p>
+                        <button class="buy-now-btn" onclick="addToCart('Poultry 2')">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Poultry Card 3 -->
+            <div class="col-md-3">
+                <div class="card">
+                    <img src="./poultry3.jpg" alt="Poultry 3">
+                    <div class="card-body">
+                        <h5 class="card-title">Orpington</h5>
+                        <p class="card-text">Price: R180</p>
+                        <p class="card-text">Availability: In Stock</p>
+                        <button class="buy-now-btn" onclick="addToCart('Poultry 3')">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Poultry Card 4 -->
+            <div class="col-md-3">
+                <div class="card">
+                    <img src="./poultry4.jpg" alt="Poultry 4">
+                    <div class="card-body">
+                        <h5 class="card-title">Plymouth Rock</h5>
+                        <p class="card-text">Price: R250</p>
+                        <p class="card-text">Availability: In Stock</p>
+                        <button class="buy-now-btn" onclick="addToCart('Poultry 4')">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pigs Section -->
+        <h2 class="mt-4">Pigs</h2>
+        <div class="row">
+            <!-- Pig Card 1 -->
+            <div class="col-md-3">
+                <div class="card">
+                    <img src="./pig1.jpg" alt="Pig 1">
+                    <div class="card-body">
+                        <h5 class="card-title">Yorkshire</h5>
+                        <p class="card-text">Price: R15,000</p>
+                        <p class="card-text">Availability: In Stock</p>
+                        <button class="buy-now-btn" onclick="addToCart('Pig 1')">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Pig Card 2 -->
+            <div class="col-md-3">
+                <div class="card">
+                    <img src="./pig2.jpg" alt="Pig 2">
+                    <div class="card-body">
+                        <h5 class="card-title">Chester WhitePig 2</h5>
+                        <p class="card-text">Price: R14,500</p>
+                        <p class="card-text">Availability: In Stock</p>
+                        <button class="buy-now-btn" onclick="addToCart('Pig 2')">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Pig Card 3 -->
+            <div class="col-md-3">
+                <div class="card">
+                    <img src="./pig3.jpg" alt="Pig 3">
+                    <div class="card-body">
+                        <h5 class="card-title">Spotted Pig</h5>
+                        <p class="card-text">Price: R16,000</p>
+                        <p class="card-text">Availability: In Stock</p>
+                        <button class="buy-now-btn" onclick="addToCart('Pig 3')">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Pig Card 4 -->
+            <div class="col-md-3">
+                <div class="card">
+                    <img src="./pig4.jpg" alt="Pig 4">
+                    <div class="card-body">
+                        <h5 class="card-title">Potbelly</h5>
+                        <p class="card-text">Price: R15,500</p>
+                        <p class="card-text">Availability: In Stock</p>
+                        <button class="buy-now-btn" onclick="addToCart('Pig 4')">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Horses Section -->
+        <h2 class="mt-4">Horses</h2>
+        <div class="row">
+            <!-- Horse Card 1 -->
+            <div class="col-md-3">
+                <div class="card">
+                    <img src="./horse1.jpg" alt="Horse 1">
+                    <div class="card-body">
+                        <h5 class="card-title">Thoroughbred</h5>
+                        <p class="card-text">Price: R30,000</p>
+                        <p class="card-text">Availability: In Stock</p>
+                        <button class="buy-now-btn" onclick="addToCart('Horse 1')">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Horse Card 2 -->
+            <div class="col-md-3">
+                <div class="card">
+                    <img src="./horse2.jpg" alt="Horse 2">
+                    <div class="card-body">
+                        <h5 class="card-title">Quarter Horse</h5>
+                        <p class="card-text">Price: R32,000</p>
+                        <p class="card-text">Availability: In Stock</p>
+                        <button class="buy-now-btn" onclick="addToCart('Horse 2')">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Horse Card 3 -->
+            <div class="col-md-3">
+                <div class="card">
+                    <img src="./horse3.jpg" alt="Horse 3">
+                    <div class="card-body">
+                        <h5 class="card-title">Appaloosa</h5>
+                        <p class="card-text">Price: R28,500</p>
+                        <p class="card-text">Availability: In Stock</p>
+                        <button class="buy-now-btn" onclick="addToCart('Horse 3')">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Horse Card 4 -->
+            <div class="col-md-3">
+                <div class="card">
+                    <img src="./horse4.jpg" alt="Horse 4">
+                    <div class="card-body">
+                        <h5 class="card-title">Appaloosa</h5>
+                        <p class="card-text">Price: R29,000</p>
+                        <p class="card-text">Availability: In Stock</p>
+                        <button class="buy-now-btn" onclick="addToCart('Horse 4')">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Donkeys Section -->
+        <h2 class="mt-4">Donkeys</h2>
+        <div class="row">
+            <!-- Donkey Card 1 -->
+            <div class="col-md-3">
+                <div class="card">
+                    <img src="./donkey1.jpg" alt="Donkey 1">
+                    <div class="card-body">
+                        <h5 class="card-title">Standard Donkey</h5>
+                        <p class="card-text">Price: R10,000</p>
+                        <p class="card-text">Availability: In Stock</p>
+                        <button class="buy-now-btn" onclick="addToCart('Donkey 1')">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Donkey Card 2 -->
+            <div class="col-md-3">
+                <div class="card">
+                    <img src="./donkey2.jpg" alt="Donkey 2">
+                    <div class="card-body">
+                        <h5 class="card-title">Miniature Donkey</h5>
+                        <p class="card-text">Price: R9,500</p>
+                        <p class="card-text">Availability: In Stock</p>
+                        <button class="buy-now-btn" onclick="addToCart('Donkey 2')">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Donkey Card 3 -->
+            <div class="col-md-3">
+                <div class="card">
+                    <img src="./donkey3.jpg" alt="Donkey 3">
+                    <div class="card-body">
+                        <h5 class="card-title">Mammoth Donkey</h5>
+                        <p class="card-text">Price: R9,000</p>
+                        <p class="card-text">Availability: In Stock</p>
+                        <button class="buy-now-btn" onclick="addToCart('Donkey 3')">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Donkey Card 4 -->
+            <div class="col-md-3">
+                <div class="card">
+                    <img src="./donkey4.jpg" alt="Donkey 4">
+                    <div class="card-body">
+                        <h5 class="card-title"> Poitou Donkey</h5>
+                        <p class="card-text">Price: R10,500</p>
+                        <p class="card-text">Availability: In Stock</p>
+                        <button class="buy-now-btn" onclick="addToCart('Donkey 4')">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="table-container">
+        <h2>Your Cart</h2>
+<table class="table table-striped cart-table">
+    <thead>
+        <tr>
+            <th>Item</th>
+            <th>Price (R)</th>
+            <th>Quantity</th>
+            <th>Total (R)</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody id="cartItems">
+        <tr>
+            <td colspan="5">Your cart is empty.</td>
+        </tr>
+    </tbody>
+</table>
+<button class="btn btn-success" onclick="checkout()">Proceed to Checkout</button>
+
+        <!-- Popup Invoice -->
+<div id="invoice-popup" style="display:none;">
+    <div id="invoice-content">
+        <h2>Invoice</h2>
+        <p id="invoice-details"></p>
+        <p>Total Amount: <span id="invoice-total"></span></p>
+        <button id="close-invoice">Close</button>
+    </div>
+</div>
+    </div>
+</div>
+<script>
+    // Example cart data structure
+let cart = [];
+
+// Function to add item to cart
+function addToCart(item, quantity) {
+    const existingItem = cart.find(i => i.name === item.name);
+    if (existingItem) {
+        existingItem.quantity += quantity;
+    } else {
+        cart.push({ ...item, quantity });
+    }
+    updateCart();
+}
+
+// Function to update cart display
+function updateCart() {
+    const cartTableBody = document.querySelector('#cart tbody');
+    cartTableBody.innerHTML = ''; // Clear existing entries
+
+    let total = 0;
+
+    cart.forEach(item => {
+        const itemTotal = item.price * item.quantity;
+        total += itemTotal;
+
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${item.name}</td>
+            <td>${item.quantity}</td>
+            <td>${item.price}</td>
+            <td>${itemTotal.toFixed(2)}</td>
+        `;
+        cartTableBody.appendChild(row);
+    });
+
+    document.getElementById('cart-total').textContent = total.toFixed(2);
+}
+document.addEventListener('DOMContentLoaded', () => {
+    const savedCart = JSON.parse(localStorage.getItem('cart'));
+    if (savedCart) {
+        cart = savedCart;
+        updateCart();
+    }
+});
+
+// Function to show invoice popup
+function showInvoice() {
+    const invoiceDetails = cart.map(item => `${item.name} (x${item.quantity})`).join('<br>');
+    const total = cart.reduce((acc, item) => acc + (item.price * item.quantity), 0);
+    
+    document.getElementById('invoice-details').innerHTML = invoiceDetails;
+    document.getElementById('invoice-total').textContent = total.toFixed(2);
+    document.getElementById('invoice-popup').style.display = 'block';
+}
+
+// Event listeners
+document.getElementById('pay-button').addEventListener('click', showInvoice);
+document.getElementById('close-invoice').addEventListener('click', () => {
+    document.getElementById('invoice-popup').style.display = 'none';
+});
+
+</script>
+<script>
+    
+    
+
+    function addToCart(name, price) {
+        const existingProduct = cart.find(item => item.name === name);
+        if (existingProduct) {
+            existingProduct.quantity++;
+        } else {
+            cart.push({ name, price, quantity: 1 });
+        }
+        updateCartUI();
+        localStorage.setItem('cart', JSON.stringify(cart)); // Save cart to local storage
+    }
+    function updateCart() {
+    const cartTableBody = document.querySelector('#cartItems');
+    cartTableBody.innerHTML = ''; // Clear existing entries
+
+    let total = 0;
+
+    cart.forEach(item => {
+        const itemTotal = item.price * item.quantity;
+        total += itemTotal;
+
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${item.name}</td>
+            <td>${item.price.toFixed(2)}</td>
+            <td>${item.quantity}</td>
+            <td>${itemTotal.toFixed(2)}</td>
+            <td><button onclick="removeFromCart('${item.name}')">Remove</button></td>
+        `;
+        cartTableBody.appendChild(row);
+    });
+
+    document.getElementById('cartCount').textContent = cart.length; // Update cart count
+    document.getElementById('invoice-total').textContent = total.toFixed(2);
+}
+
+function removeFromCart(itemName) {
+    cart = cart.filter(item => item.name !== itemName);
+    updateCart();
+}
+
+
+    function updateCartUI() {
+        const cartItems = document.getElementById('cartItems');
+        cartItems.innerHTML = '';
+
+        if (cart.length === 0) {
+            cartItems.innerHTML = `<tr><td colspan="5">Your cart is empty.</td></tr>`;
+        } else {
+            cart.forEach(product => {
+                const total = product.price * product.quantity;
+                const itemRow = document.createElement('tr');
+                itemRow.innerHTML = `
+                    <td>${product.name}</td>
+                    <td>${product.price}</td>
+                    <td>${product.quantity}</td>
+                    <td>${total}</td>
+                    <td><button class="btn btn-danger" onclick="removeFromCart('${product.name}')">Remove</button></td>
+                `;
+                cartItems.appendChild(itemRow);
+            });
+        }
+        document.getElementById('cartCount').innerText = cart.length; // Update cart count
+    }
+
+    function removeFromCart(name) {
+        cart = cart.filter(item => item.name !== name);
+        updateCartUI();
+        localStorage.setItem('cart', JSON.stringify(cart)); // Update cart in local storage
+    }
+
+    function checkout() {
+        if (cart.length === 0) {
+            alert('Your cart is empty!');
+            return;
+        }
+        // Checkout logic can be implemented here
+        alert('Proceeding to checkout...');
+    }
+
+    // Initialize cart UI on page load
+    updateCartUI();
+</script>
+
+    <footer class="text-center py-4 bg-dark text-white mt-5">
+        <p>&copy; 2024 My Store. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        // JavaScript function to handle adding to cart
+        function addToCart(item) {
+            alert(item + " has been added to your cart.");
+            // Here you would typically add the item to a cart array and update the cart count
+            let count = document.getElementById('cartCount');
+            count.innerHTML = parseInt(count.innerHTML) + 1;
+        }
+    </script>
+    <script>
+        function handleSearch(event) {
+            event.preventDefault(); // Prevent the form from submitting
+    
+            // Get the search input value
+            const searchValue = document.getElementById('searchInput').value.toLowerCase();
+            
+            // Get all livestock cards
+            const livestockCards = document.querySelectorAll('.card');
+    
+            // Loop through all cards and hide those that don't match the search
+            livestockCards.forEach(card => {
+                const title = card.querySelector('.card-title').textContent.toLowerCase();
+                if (title.includes(searchValue)) {
+                    card.style.display = ''; // Show the card
+                } else {
+                    card.style.display = 'none'; // Hide the card
+                }
+            });
+        }
+        alert(name + ' has been added to your cart.');
+
+    </script>
+    
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>
