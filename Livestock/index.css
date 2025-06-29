@@ -1,0 +1,195 @@
+body {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f9f9f9;
+  height: 100vh; /* Make sure the body takes the full height */
+  overflow: hidden; /* Prevent body scrolling */
+}
+
+.container-fluid {
+  display: flex;
+  height: 100%; /* Full height of the viewport */
+}
+
+/* Sidebar Styles */
+.sidebar {
+  width: 250px; /* Fixed width for sidebar */
+  background-color: #00c04b; /* Updated sidebar background color */
+  padding: 20px;
+  color: darkgrey;
+  border-radius: 10px;
+  height: 100%; /* Full height */
+  overflow-y: auto; /* Add scrolling for overflowing content */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+/* Sidebar Title */
+.sidebar h2 {
+  text-align: center;
+  color: #ecf0f1;
+  background-color: #264653; /* Sidebar header background */
+  padding: 15px; /* Padding for the title */
+  border-radius: 10px; /* Rounded corners for the title */
+  margin-bottom: 20px; /* Space below the title */
+}
+
+/* List Styles */
+.sidebar ul {
+  list-style-type: none; /* Remove bullet points */
+  padding: 0;
+}
+
+.sidebar ul li {
+  margin: 15px 0; /* Space between list items */
+}
+
+/* Link Styles */
+.sidebar ul li a {
+  text-decoration: none; /* Remove underline */
+  color: #495057; /* Default link color */
+  display: block;
+  padding: 12px 15px; /* Add padding for clickable area */
+  background-color: white; /* Link background color */
+  border-radius: 5px; /* Rounded corners for links */
+  transition: background-color 0.3s, color 0.3s; /* Transition effects */
+}
+
+/* Link Hover and Active States */
+.sidebar ul li a:hover,
+.sidebar ul li a.active {
+  background-color: #16a085; /* Hover or active background color */
+  color: white; /* Change text color on hover */
+}
+
+.main-content {
+  flex: 1; /* This allows it to grow and fill remaining space */
+  padding: 20px;
+  display: flex;
+  flex-direction: column; /* Stack elements vertically */
+  height: 100%; /* Full height of the parent */
+  overflow-y: auto; /* Scrollable if content overflows */
+}
+
+.main-content h1 {
+  margin-bottom: 20px;
+}
+
+#searchBar {
+  padding: 10px;
+  width: 100%;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.actions {
+  margin-bottom: 20px;
+}
+
+.actions button {
+  padding: 10px 15px;
+  border: none;
+  background-color: #16a085;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.Livestock-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.Livestock-table th,
+.Livestock-table td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+.status {
+  padding: 5px;
+  border-radius: 3px;
+  color: white;
+}
+
+.status.good {
+  background-color: #28a745; /* Green */
+}
+
+.status.fair {
+  background-color: #ffc107; /* Yellow */
+}
+
+.status.unhealthy {
+  background-color: #dc3545; /* Red */
+}
+
+.livestock-image {
+  width: 50px; /* Fixed width for images */
+  height: auto; /* Maintain aspect ratio */
+}
+
+/* Popup styles */
+.popup {
+  display: none; /* Hidden by default */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Ensure the popup is above other elements */
+}
+
+.popup-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 5px;
+  max-width: 400px; /* Set a max width for responsiveness */
+  width: 90%; /* Allow the popup to take 90% width on smaller screens */
+  max-height: 90vh; /* Limit the height of the popup */
+  overflow-y: auto; /* Allow scrolling if content overflows */
+}
+
+.popup-content h2 {
+  margin-bottom: 20px;
+}
+
+.popup-content label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.popup-content input,
+.popup-content select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.buttons button {
+  width: 48%; /* Space for both buttons */
+}
+
+footer {
+  background-color: #264653;
+  color: white;
+  text-align: center;
+  padding: 15px 0;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 60px;
+  position: relative;
+}

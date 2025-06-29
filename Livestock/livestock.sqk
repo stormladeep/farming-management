@@ -1,0 +1,16 @@
+CREATE DATABASE farming_management;
+
+USE farming_management;
+
+CREATE TABLE livestock (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    rfid VARCHAR(255) NOT NULL,
+    type VARCHAR(255) NOT NULL,
+    breed VARCHAR(255) NOT NULL,
+    birth_date DATE NOT NULL,
+    age INT NOT NULL,
+    health_status VARCHAR(50) NOT NULL,
+    last_checkup DATE NOT NULL,
+    next_vaccination DATE NOT NULL,
+    image_path VARCHAR(255) NOT NULL
+);
