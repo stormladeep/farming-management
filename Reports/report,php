@@ -1,0 +1,63 @@
+<?php
+include 'database.php';
+
+function insertExpense($category, $amount) {
+    global $pdo;
+    $stmt = $pdo->prepare("INSERT INTO expenses (category, amount) VALUES (?, ?)");
+    $stmt->execute([$category, $amount]);
+}
+
+function insertRevenue($source, $amount) {
+    global $pdo;
+    $stmt = $pdo->prepare("INSERT INTO revenue (source, amount) VALUES (?, ?)");
+    $stmt->execute([$source, $amount]);
+}
+
+function insertYield($crop, $yield_tons, $input_cost) {
+    global $pdo;
+    $stmt = $pdo->prepare("INSERT INTO yields (crop, yield_tons, input_cost) VALUES (?, ?, ?)");
+    $stmt->execute([$crop, $yield_tons, $input_cost]);
+}
+
+function insertLabor($task, $hours_worked, $cost) {
+    global $pdo;
+    $stmt = $pdo->prepare("INSERT INTO labor (task, hours_worked, cost) VALUES (?, ?, ?)");
+    $stmt->execute([$task, $hours_worked, $cost]);
+}
+
+function fetchData($table) {
+    global $pdo;
+    $stmt = $pdo->prepare("SELECT * FROM " . $table);
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+<table class="table table-striped table-bordered mt-3" id="expenseTable">
+    <thead>
+        <tr>
+            <th>Category</th>
+            <th>Amount ($)</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach ($expenses as $expense): ?>
+            <tr>
+                <td><?php echo $expense['category']; ?></td>
+                <td><?php echo $expense['amount']; ?></td>
+            </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table>
+
+// Usage Example
+// Insert data
+insertExpense('Seeds', 5000);
+insertRevenue('Crop Sales', 50000);
+insertYield('Corn', 500, 10000);
+insertLabor('Planting', 200, 4000);
+
+// Fetch data for each section
+$expenses = fetchData('expenses');
+$revenue = fetchData('revenue');
+$yields = fetchData('yields');
+$labor = fetchData('labor');
+?>
