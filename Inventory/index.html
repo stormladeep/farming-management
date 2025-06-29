@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-translate="title">FMS Inventory</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;400;600;800&display=swap" rel="stylesheet">
+    <script defer src="scripts.js"></script>
+</head>
+<body>
+    <div class="container-fluid d-flex">
+        <!-- Sidebar -->
+        <nav class="sidebar  border-right" style="width: 250px;">
+            <ul class="nav flex-column">
+                <li class="nav-item"><a href="../admin login signup/admin_dashboard.html" class="nav-link translate" data-translate="dashboard"><i class="fas fa-tachometer-alt"></i>Dashboard</a></li>
+                <li class="nav-item"><a href="../crops/index.html" class="nav-link translate" data-translate="crops"><i class="fas fa-seedling"></i>Crops</a></li>
+                <li class="nav-item"><a href="../livestock/index.html" class="nav-link translate" data-translate="livestock"><i class="fas fa-paw"></i>Livestock</a></li>
+                <li class="nav-item"><a href="../Fields/fields.html" class="nav-link translate" data-translate="fields"><i class="fas fa-map-marked-alt"></i>Fields</a></li>
+                <li class="nav-item"><a href="../reports/reports.html" class="nav-link translate" data-translate="expenses"><i class="fas fa-file-alt"></i>Report</a></li>
+                <li class="nav-item"><a href="#" class="nav-link active translate" data-translate="inventory"><i class="fas fa-warehouse"></i>Inventory</a></li>
+                <li class="nav-item"><a href="../order/index.html" class="nav-link translate" data-translate="orders"><i class="fas fa-boxes"></i>Orders</a></li>
+                <li class="nav-item"><a href="../labour/labour.html" class="nav-link translate" data-translate="labour"><i class="fas fa-tasks"></i>Labour</a></li>
+                <li class="nav-item"><a href="../products/product.html" class="nav-link translate" data-translate="products"><i class="fas fa-boxes"></i>Products</a></li>
+            </ul>
+        </nav>
+
+        <!-- Main Content -->
+        <div class="main-content flex-grow-1 p-4">
+            <header class="d-flex justify-content-between mb-4">
+                <input type="text" placeholder="Search here..." id="global-search" class="form-control w-50 translate" data-translate="searchPlaceholder">
+                <div class="user-info">
+                    <div class="dropdown">
+                        <select id="source-languages" class="form-select">
+                            <option value="en" selected>English</option>
+                            <option value="fr">French</option>
+                            <option value="zh">Chinese</option>
+                            <option value="de">German</option>
+                            <option value="el">Greek</option>
+                            <option value="hi">Hindi</option>
+                            <option value="ja">Japanese</option>
+                            <option value="es">Spanish</option>
+                            <option value="ta">Tamil</option>
+                            <option value="te">Telugu</option>
+                            <option value="zu">Zulu</option>
+                            <option value="sa">Sesotho</option>
+                        </select>
+                        <span class="translate" data-translate="admin">Admin</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Inventory Section -->
+            <section class="inventory">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h1 class="translate" data-translate="inventory">Inventory</h1>
+                    <div>
+                        <input type="text" id="search here" placeholder="Search Inventory..." class="form-control d-inline-block w-25 me-2 translate" data-translate="searchInventory">
+                        <button id="export-btn" class="btn btn-primary translate" data-translate="export">Export</button>
+                        <button id="add-item-btn" data-toggle="modal" data-target="#add-item-modal">Add New Item</button>
+                        <!-- Add New Item Button -->
+                    </div>
+                </div>
+
+                <!-- Add New Item Modal -->
+                <div id="add-item-modal" class="modal fade" tabindex="-1" role="dialog">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h2 class="modal-title translate" data-translate="addNewItem">Add New Item</h2>
+                                <button type="button" class="close" id="close-modal" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form id="add-item-form">
+                                    <div class="mb-3">
+                                        <label for="item-name" class="translate" data-translate="itemName">Item Name:</label>
+                                        <input type="text" id="item-name" class="form-control" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="item-category" class="translate" data-translate="category">Category:</label>
+                                        <input type="text" id="item-category" class="form-control" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="item-quantity" class="translate" data-translate="quantity">Quantity:</label>
+                                        <input type="number" id="item-quantity" class="form-control" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="item-unit" class="translate" data-translate="unit">Unit:</label>
+                                        <input type="text" id="item-unit" class="form-control" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="item-status" class="translate" data-translate="status">Status:</label>
+                                        <input type="text" id="item-status" class="form-control" required>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary translate" data-translate="addNewItem">Add Item</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Notification Section -->
+                <div class="notification-area mb-3">
+                    <button id="notification-btn" class="btn btn-light translate" data-translate="notifications">🔔 Notifications (<span id="notification-count">0</span>)</button>
+                    <div id="notifications" class="dropdown-menu">
+                        <!-- Notifications will be populated here -->
+                    </div>
+                </div>
+
+                <!-- Generate Report Button -->
+                <div class="generate-report mb-3">
+                    <button id="generate-report-btn" class="btn btn-success translate" data-translate="generateReport">Generate Report</button>
+                </div>
+
+                <!-- Inventory Table -->
+                <table id="inventory-table" class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th class="translate" data-translate="itemName">Item Name</th>
+                            <th class="translate" data-translate="category">Category</th>
+                            <th class="translate" data-translate="quantity">Quantity</th>
+                            <th class="translate" data-translate="unit">Unit</th>
+                            <th class="translate" data-translate="lastUpdated">Last Updated</th>
+                            <th class="translate" data-translate="status">Status</th>
+                            <th class="translate" data-translate="action">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="inventory-data">
+                        <!-- Data will be populated here -->
+                        
+                        <tr>
+                            <td>John</td>
+                            <td>Doe</td>
+                            <td>123 Maple St, Cityville</td>
+                            <td>1234567890</td>
+                            <td>+123456789</td>
+                            <td>Asian</td>
+                            <td>Male</td>
+                            <td>Manager</td>
+                            <td>5</td>
+                        </tr>
+                        <tr>
+                            <td>Sarah</td>
+                            <td>Smith</td>
+                            <td>456 Oak Ave, Townsville</td>
+                            <td>9876543210</td>
+                            <td>+198765432</td>
+                            <td>White</td>
+                            <td>Female</td>
+                            <td>Supervisor</td>
+                            <td>8</td>
+                        </tr>
+                        <tr>
+                            <td>Michael</td>
+                            <td>Brown</td>
+                            <td>789 Pine Rd, Villagetown</td>
+                            <td>1122334455</td>
+                            <td>+112233445</td>
+                            <td>Black</td>
+                            <td>Male</td>
+                            <td>Technician</td>
+                            <td>10</td>
+                        </tr>
+                        <tr>
+                            <td>Linda</td>
+                            <td>Johnson</td>
+                            <td>321 Cedar Ln, Hamlet</td>
+                            <td>5566778899</td>
+                            <td>+155667788</td>
+                            <td>Hispanic</td>
+                            <td>Female</td>
+                            <td>Accountant</td>
+                            <td>7</td>
+                        </tr>
+                        <tr>
+                            <td>Robert</td>
+                            <td>Williams</td>
+                            <td>654 Spruce St, Capital City</td>
+                            <td>2233445566</td>
+                            <td>+122334455</td>
+                            <td>Mixed</td>
+                            <td>Male</td>
+                            <td>Analyst</td>
+                            <td>6</td>
+                        </tr>
+                        <tr>
+                            <td>Emily</td>
+                            <td>Davis</td>
+                            <td>987 Willow Dr, Metropolis</td>
+                            <td>3344556677</td>
+                            <td>+133445566</td>
+                            <td>White</td>
+                            <td>Female</td>
+                            <td>HR Specialist</td>
+                            <td>4</td>
+                        </tr>
+                        <tr>
+                            <td>James</td>
+                            <td>Wilson</td>
+                            <td>159 Birch Pl, Cosmopolis</td>
+                            <td>4455667788</td>
+                            <td>+144556677</td>
+                            <td>Asian</td>
+                            <td>Male</td>
+                            <td>Engineer</td>
+                            <td>9</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <!-- Pagination -->
+                <nav aria-label="Page navigation">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item">
+                            <button id="prev-page" class="page-link translate" data-translate="previous">Previous</button>
+                        </li>
+                        <li class="page-item">
+                            <span id="page-num" class="page-link">1</span>
+                        </li>
+                        <li class="page-item">
+                            <button id="next-page" class="page-link translate" data-translate="next">Next</button>
+                        </li>
+                    </ul>
+                </nav>
+            </section>
+        </div>
+    </div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+    const addItemForm = document.getElementById('add-item-form');
+    const inventoryTableBody = document.getElementById('inventory-data');
+
+    addItemForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        // Get the form values
+        const itemName = document.getElementById('item-name').value;
+        const itemCategory = document.getElementById('item-category').value;
+        const itemQuantity = document.getElementById('item-quantity').value;
+        const itemUnit = document.getElementById('item-unit').value;
+        const itemStatus = document.getElementById('item-status').value;
+
+        // Create a new row for the table
+        const newRow = document.createElement('tr');
+
+        newRow.innerHTML = `
+            <td>${itemName}</td>
+            <td>${itemCategory}</td>
+            <td>${itemQuantity}</td>
+            <td>${itemUnit}</td>
+            <td>${new Date().toLocaleDateString()}</td>
+            <td>${itemStatus}</td>
+            <td>
+                <button class="btn btn-danger btn-sm delete-btn">Delete</button>
+            </td>
+        `;
+
+        // Append the new row to the table body
+        inventoryTableBody.appendChild(newRow);
+
+        // Reset the form fields
+        addItemForm.reset();
+
+        // Close the modal
+        $('#add-item-modal').modal('hide');
+
+        // Add delete functionality to the new delete button
+        addDeleteFunctionality();
+    });
+
+    // Function to handle delete button functionality
+    function addDeleteFunctionality() {
+        const deleteButtons = document.querySelectorAll('.delete-btn');
+        deleteButtons.forEach(function (button) {
+            button.addEventListener('click', function () {
+                this.closest('tr').remove();
+            });
+        });
+    }
+
+    // Initialize delete functionality for any pre-existing rows
+    addDeleteFunctionality();
+});
+
+</script>
+    <!-- Footer -->
+    <footer class="text-center mt-4">
+        <p class="translate" data-translate="footerText">&copy; 2024 FMS Inventory. All Rights Reserved.</p>
+        <p class="translate" data-translate="contactUs">Contact us: <a href="mailto:support@example.com" class="translate" data-translate="supportEmail">support@example.com</a></p>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</body>
+</html>
