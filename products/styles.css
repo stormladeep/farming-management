@@ -1,0 +1,251 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+}
+
+.product-page {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: white;
+    border-bottom: 1px solid #ddd;
+}
+
+.header h1 {
+    margin: 0;
+}
+
+.actions button {
+    margin-left: 10px;
+    padding: 8px 12px;
+    border: none;
+    background-color: #e0e0e0;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.add-product {
+    background-color: #000;
+    color: white;
+}
+
+.product-info {
+    display: flex;
+    justify-content: space-between;
+    background-color: white;
+    padding: 20px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+}
+
+.metric {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+}
+
+.product-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+}
+
+.product-table th, .product-table td {
+    padding: 15px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.product-table th {
+    background-color: #f1f1f1;
+}
+
+.product-table td img {
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+}
+
+.status.active {
+    background-color: #28a745;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 15px;
+}
+
+.in-stock {
+    color: red;
+}
+
+.out-of-stock {
+    color: red;
+}
+
+.footer {
+    text-align: center;
+    padding: 10px;
+    background-color: white;
+    border-top: 1px solid #ddd;
+    margin-top: 20px;
+}
+
+.footer a {
+    color: #007bff;
+}
+
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 0;
+}
+
+.add-product-page {
+    width: 80%;
+    margin: 20px auto;
+    background-color: white;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+header a {
+    font-size: 16px;
+    color: #333;
+    text-decoration: none;
+}
+
+.form-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.left-section, .right-section {
+    width: 48%;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+input[type="text"], textarea, select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+textarea {
+    resize: vertical;
+}
+
+.media-upload {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.media-upload button {
+    padding: 8px 12px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.media-upload p {
+    font-size: 12px;
+    color: #888;
+}
+
+.pricing {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.pricing input {
+    width: 100px;
+}
+
+.publishing-options div {
+    margin-bottom: 10px;
+}
+
+.publishing-options p {
+    font-size: 12px;
+    color: #888;
+}
+
+.form-group input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+
+
+body {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+}
+h1, h2, h3 {
+    margin: 10px 0;
+}
+.product-category, .product-meta, .search-engine-listing {
+    margin-bottom: 20px;
+}
+.search-engine-listing p {
+    margin: 5px 0;
+}
+input[type="text"] {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%;
+    box-sizing: border-box;
+}
+button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+button:hover {
+    background-color: #0056b3;
+}
+.variant-section, .allergen-info, .dietary-pref {
+    margin-top: 15px;
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 5px;
+}
+.variant-section span, .allergen-info button, .dietary-pref button {
+    display: block;
+    margin: 10px 0;
+    font-size: 14px;
+}
+.small-text {
+    color: #666;
+    font-size: 12px;
+}
+

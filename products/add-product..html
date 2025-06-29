@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Product</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+   
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .sidebar {
+            width: 200px;
+            height: 100vh;
+            background-color: #00c04b;
+            position: fixed;
+            top: 0;
+            left: 0;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto; /* Enable vertical scrollbar */
+            padding: 20px;
+        }
+        .sidebar h2 {
+            text-align: center;
+            color: #ecf0f1;
+            background-color: #264653; /* Sidebar header background */
+            padding: 15px; /* Padding for the title */
+            border-radius: 10px; /* Rounded corners for the title */
+            margin-bottom: 20px; /* Space below the title */
+        }
+        .sidebar ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        .sidebar ul li {
+            margin: 20px 0;
+        }
+        .sidebar ul li a {
+            text-decoration: none; /* Remove underline */
+            color: #495057; /* Default link color */
+            display: block;
+            padding: 12px 15px; /* Add padding for clickable area */
+            background-color: white; /* Link background color */
+            border-radius: 5px; /* Rounded corners for links */
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .sidebar ul li a:hover {
+            background-color: #16a085; /* Hover or active background color */
+            color: white; /* Change text color on hover */
+        }
+        .sidebar ul li a.active {
+            background-color: #16a085; /* Hover or active background color */
+            color: white; /* Change text color on hover */
+        }
+        .main-content {
+            margin-left: 260px; /* Leave space for the sidebar */
+            padding: 20px; /* Add padding to the main content */
+        }
+        .add-product-page {
+            background-color: white;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+        .media-upload-preview {
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-top: 10px;
+            text-align: center;
+        }
+        .media-upload-preview img {
+            max-width: 100%;
+            height: auto;
+        }
+        .category-meta-container {
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+        .textarea-preview {
+            margin-top: 20px;
+        }
+        .existing-products-table {
+            margin-top: 20px;
+        }
+        .highlighted-products {
+            margin-top: 30px;
+        }
+        .highlighted-products-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .product-card {
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 5px;
+            background-color: white;
+            width: 200px;
+        }
+        .product-card img {
+            width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h2>FMS</h2>
+        <ul>
+            <li><a href="../admin login signup/admin_dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a></li>
+            <li><a href="../crops/index.html"><i class="fas fa-seedling"></i>Crops</a></li>
+            <li><a href="../livestock/index.html"><i class="fas fa-paw"></i>Livestock</a></li>
+            <li><a href="../Fields/fields.html"><i class="fas fa-map-marked-alt"></i>Fields</a></li>
+            <li><a href="../reports/reports.html"><i class="fas fa-file-alt"></i>Reports</a></li>
+            <li><a href="../inventory/index.html"><i class="fas fa-warehouse"></i>Inventory</a></li>
+            <li><a href="../order/index.html"><i class="fas fa-boxes"></i>Orders</a></li>
+            <li><a href="../labour/labour.html"><i class="fas fa-tasks"></i>Labour</a></li>
+            <li><a href="../products/product.html" class="active"><i class="fas fa-boxes"></i>Products</a></li>
+        </ul>
+    </div>
+
+    <div class="main-content">
+        <div class="container add-product-page">
+            <header>
+                <a href="../products/product.html" class="text-primary mb-3 d-block">← Product</a>
+            </header>
+
+            <form id="productForm">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="title">Title</label>
+                            <input type="text" class="form-control" id="title" placeholder="Product Title">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                            <textarea id="description" class="form-control" rows="5" placeholder="Product Description"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Media</label>
+                            <div class="media-upload">
+                                <input type="file" class="form-control" id="uploadImage" accept="image/*">
+                            </div>
+                            <div class="media-upload-preview" id="mediaPreview">
+                                <p>No image uploaded</p>
+                            </div>
+                            <small class="form-text text-muted">Accepts images, videos, or 3D models</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="category">Category</label>
+                            <input type="text" id="category" class="form-control" placeholder="Category">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Pricing</label>
+                            <div class="form-row">
+                                <div class="col">
+                                    <input type="text" class="form-control" id="price" placeholder="Price">
+                                </div>
+                                <div class="col">
+                                    <input type="text" class="form-control" id="comparePrice" placeholder="Compare-at price">
+                                </div>
+                            </div>
+                            <div class="form-check mt-2">
+                                <input type="checkbox" class="form-check-input" id="chargeTax" checked>
+                                <label class="form-check-label" for="chargeTax">Charge tax on this product</label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="salesChannels">Sales Channels</label>
+                            <input type="text" class="form-control" id="salesChannels" placeholder="Sales Channels">
+                        </div>
+
+                        <div class="variant-section">
+                            <h2>Variants</h2>
+                            <span class="small-text">Add options like size or color</span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="status">Status</label>
+                            <select id="status" class="form-control">
+                                <option>Active</option>
+                                <option>Draft</option>
+                                <option>Archived</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="inventory">Inventory</label>
+                            <select id="inventory" class="form-control">
+                                <option value="In Stock">In Stock</option>
+                                <option value="Out of Stock">Out of Stock</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="productType">Type</label>
+                            <input type="text" class="form-control" id="productType" placeholder="Product Type">
+                        </div>
+
+                        <div class="category-meta-container">
+                            <h2>Category metafields</h2>
+                            <label for="foodProductForm">Food product form:</label>
+                            <input type="text" id="foodProductForm" class="form-control" value="Fresh" placeholder="Fresh" readonly>
+                            <div class="mt-2">
+                                <button type="button" class="btn btn-primary">Edit🖋️</button>
+                                <button type="button" class="btn btn-secondary">Save</button>
+                            </div>
+                        </div>
+
+                        <div class="textarea-preview">
+                            <h3>Search Engine Listing Preview</h3>
+                            <textarea id="seoPreview" class="form-control" rows="5" readonly></textarea>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group text-center">
+                    <button type="button" class="btn btn-success" onclick="addProduct()">Add Product</button>
+                </div>
+            </form>
+
+            <div class="existing-products-table">
+                <h3>Existing Products</h3>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Select</th>
+                            <th>Image</th> <!-- New Image Column -->
+                            <th>Title</th>
+                            <th>Status</th>
+                            <th>Inventory</th>
+                            <th>Sales Channels</th>
+                            <th>Markets</th>
+                            <th>Category</th>
+                            <th>Type</th>
+                            <th>Price</th>
+                        </tr>
+                    </thead>
+                    <tbody id="productsTableBody"></tbody>
+                </table>
+                <button class="btn btn-danger" id="deleteButton" onclick="deleteSelectedProducts()">Delete Selected</button>
+            </div>
+
+            <div class="highlighted-products">
+                <h3>Highlighted Products</h3>
+                <div class="highlighted-products-container" id="highlightedProductsContainer"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('uploadImage').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const preview = document.getElementById('mediaPreview');
+                preview.innerHTML = `<img src="${e.target.result}" alt="Uploaded Image">`;
+            };
+            reader.readAsDataURL(file);
+        });
+
+        function addProduct() {
+            const title = document.getElementById('title').value;
+            const description = document.getElementById('description').value;
+            const image = document.getElementById('mediaPreview').querySelector('img') ? 
+                          document.getElementById('mediaPreview').querySelector('img').src : '';
+            const category = document.getElementById('category').value;
+            const status = document.getElementById('status').value;
+            const inventory = document.getElementById('inventory').value;
+            const salesChannels = document.getElementById('salesChannels').value;
+            const productType = document.getElementById('productType').value;
+            const price = document.getElementById('price').value;
+
+            const productData = { title, description, status, inventory, salesChannels, category, productType, price, image };
+
+            const existingProducts = JSON.parse(localStorage.getItem('products')) || [];
+            existingProducts.push(productData);
+            localStorage.setItem('products', JSON.stringify(existingProducts));
+
+            displayProducts();
+            document.getElementById('productForm').reset();
+            document.getElementById('mediaPreview').innerHTML = '<p>No image uploaded</p>'; // Reset image preview
+        }
+
+        function displayProducts() {
+            const products = JSON.parse(localStorage.getItem('products')) || [];
+            const tableBody = document.getElementById('productsTableBody');
+            const highlightedContainer = document.getElementById('highlightedProductsContainer');
+            
+            tableBody.innerHTML = ''; // Clear existing rows
+            highlightedContainer.innerHTML = ''; // Clear existing cards
+
+            products.forEach(product => {
+                // Table rows
+                const newRow = document.createElement('tr');
+                newRow.innerHTML = `
+                    <td><input type="checkbox"></td>
+                    <td><img src="${product.image || 'placeholder.jpg'}" alt="Product Image" style="width: 50px; height: 50px;"></td> <!-- Image Cell -->
+                    <td>${product.title}</td>
+                    <td>${product.status}</td>
+                    <td>${product.inventory}</td>
+                    <td>${product.salesChannels}</td>
+                    <td>${product.markets}</td>
+                    <td>${product.category}</td>
+                    <td>${product.productType}</td>
+                    <td>${product.price}</td>
+                `;
+                tableBody.appendChild(newRow);
+
+                // Product cards
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                card.innerHTML = `
+                    <img src="${product.image || 'placeholder.jpg'}" alt="Product Image">
+                    <h5>${product.title}</h5>
+                    <p>Status: ${product.status}</p>
+                    <p>Inventory: ${product.inventory}</p>
+                    <p>Price: ${product.price}</p>
+                `;
+                highlightedContainer.appendChild(card);
+            });
+        }
+
+        function deleteSelectedProducts() {
+            const products = JSON.parse(localStorage.getItem('products')) || [];
+            const checkboxes = document.querySelectorAll('#productsTableBody input[type="checkbox"]');
+            const updatedProducts = products.filter((_, index) => !checkboxes[index].checked);
+            localStorage.setItem('products', JSON.stringify(updatedProducts));
+            displayProducts();
+        }
+
+        // Load products on page load
+        document.addEventListener('DOMContentLoaded', displayProducts);
+    </script>
+</body>
+</html>
