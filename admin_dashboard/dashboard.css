@@ -1,0 +1,540 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #c5edf5;
+    
+}
+
+.dashboard {
+    display: flex;
+}
+
+/* Updated Sidebar Background Color to Lime Sky Blue */
+.sidebar {
+    background-color: #87CEFA; /* Sky Blue */
+    color: white;
+    width: 200px;
+    padding: 20px;
+}
+
+.sidebar h2 {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    font-size: 1.5rem;
+}
+
+.sidebar h2 i {
+    margin-right: 10px;
+}
+
+.sidebar nav ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.sidebar nav ul li {
+    margin: 10px 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.sidebar nav ul li i {
+    margin-right: 10px;
+}
+
+.sidebar nav ul li a {
+    color: aquamarine;
+    text-decoration: none;
+}
+
+.sidebar-footer {
+    margin-top: auto;
+}
+
+.sidebar-footer a {
+    color: black;
+    display: block;
+    margin: 10px 0;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.sidebar-footer a i {
+    margin-right: 10px;
+}
+
+.main-content {
+    flex: 1;
+    padding: 20px;
+    background-color: #ecf0f1;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+/* Updated Search Bar and Language Section Color */
+.search-language {
+    display: flex;
+    align-items: center;
+}
+
+#search-bar {
+    padding: 10px;
+    margin-right: 10px;
+    border: 1px solid #bdc3c7;
+    border-radius: 5px;
+}
+
+#search-btn {
+    background-color: #87CEFA; /* Sky Blue */
+    border: none;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#language-select {
+    padding: 10px;
+    border: 1px solid #bdc3c7;
+    border-radius: 5px;
+}
+
+.user-profile {
+    display: flex;
+    align-items: center;
+}
+
+#profile-pic-upload {
+    margin-left: 10px;
+}
+
+.user-profile i {
+    font-size: 2rem;
+    margin-left: 10px;
+}
+
+.stats-overview {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.stat-card {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    flex: 1;
+    margin-right: 10px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+}
+
+.stat-card i {
+    margin-right: 10px;
+    padding: 20px;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    color: white;
+}
+
+.stat-card:last-child {
+    margin-right: 0;
+}
+
+.charts {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.chart {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    height: 300px;
+}
+
+.tasks-weather {
+    display: flex;
+    justify-content: space-between;
+}
+
+.tasks, .weather {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    width: 48%;
+}
+
+.tasks h3, .weather h3 {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+}
+
+.tasks h3 i, .weather h3 i {
+    margin-right: 10px;
+}
+
+/* Sign-out Button */
+.signout-button {
+    padding: 10px 20px;
+    background-color: #f44336;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+.signout-button:hover {
+    background-color: #d32f2f;
+}
+
+/* Profile Dropdown */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropbtn {
+    background-color: #87CEFA; /* Sky Blue */
+    color: white;
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown:hover .dropbtn {
+    background-color: #66B2FF; /* Slightly darker Sky Blue */
+}
+
+/* Footer */
+footer {
+    background-color: #264653;
+    color: white;
+    text-align: center;
+    padding: 15px 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 60px;
+}
+/*
+document.addEventListener('DOMContentLoaded', function () {
+    const translations = {
+        en: {
+            title: "FMS Inventory",
+            dashboard: "Dashboard",
+            crops: "Crops",
+            livestock: "Livestock",
+            fields: "Fields",
+            expenses: "Expenses",
+            inventory: "Inventory",
+            orders: "Orders",
+            labour: "Labour",
+            products: "Products",
+            searchPlaceholder: "Search here...",
+            addNewItem: "+ Add New Item",
+            export: "Export",
+            generateReport: "Generate Report",
+            itemName: "Item Name",
+            category: "Category",
+            quantity: "Quantity",
+            unit: "Unit",
+            lastUpdated: "Last Updated",
+            status: "Status",
+            action: "Action",
+            previous: "Previous",
+            next: "Next",
+            footerText: "&copy; 2024 FMS Inventory. All Rights Reserved.",
+            contactUs: "Contact us:",
+            supportEmail: "support@example.com",
+            notifications: "Notifications"
+        },
+        fr: {
+            title: "Inventaire FMS",
+            dashboard: "Tableau de bord",
+            crops: "Cultures",
+            livestock: "Bétail",
+            fields: "Champs",
+            expenses: "Dépenses",
+            inventory: "Inventaire",
+            orders: "Commandes",
+            labour: "Travail",
+            products: "Produits",
+            searchPlaceholder: "Rechercher ici...",
+            addNewItem: "+ Ajouter un nouvel article",
+            export: "Exporter",
+            generateReport: "Générer un rapport",
+            itemName: "Nom de l'article",
+            category: "Catégorie",
+            quantity: "Quantité",
+            unit: "Unité",
+            lastUpdated: "Dernière mise à jour",
+            status: "Statut",
+            action: "Action",
+            previous: "Précédent",
+            next: "Suivant",
+            footerText: "&copy; 2024 Inventaire FMS. Tous droits réservés.",
+            contactUs: "Contactez-nous:",
+            supportEmail: "support@example.com",
+            notifications: "Notifications"
+        },
+        sa: {
+            title: "FMS Khabiso",
+            dashboard: "Dashiboard",
+            crops: "Dikgwebo",
+            livestock: "Bokhuts'o",
+            fields: "Masimo",
+            expenses: "Ditsenyo",
+            inventory: "Khabiso",
+            orders: "Ditsheko",
+            labour: "Mehato",
+            products: "Products",
+            searchPlaceholder: "Batla fa...",
+            addNewItem: "+ Eketsa Ntho e Ncha",
+            export: "Tlhopha",
+            generateReport: "Bua Khabiso",
+            itemName: "Lebitso la Ntho",
+            category: "Kgaolo",
+            quantity: "Bongata",
+            unit: "Yuniti",
+            lastUpdated: "Qetello e Ncha",
+            status: "Boemo",
+            action: "Ts'ebetso",
+            previous: "E fetileng",
+            next: "E latelang",
+            footerText: "&copy; 2024 FMS Khabiso. Mehlala eohle e bolokilwe.",
+            contactUs: "Ikopanye le rona:",
+            supportEmail: "support@example.com",
+            notifications: "Diphetho"
+        },
+        ja: {
+            title: "FMS在庫",
+            dashboard: "ダッシュボード",
+            crops: "作物",
+            livestock: "家畜",
+            fields: "フィールド",
+            expenses: "経費",
+            inventory: "在庫",
+            orders: "注文",
+            labour: "労働",
+            products: "製品",
+            searchPlaceholder: "ここで検索...",
+            addNewItem: "+ 新しいアイテムを追加",
+            export: "エクスポート",
+            generateReport: "レポートを生成",
+            itemName: "アイテム名",
+            category: "カテゴリ",
+            quantity: "数量",
+            unit: "単位",
+            lastUpdated: "最終更新日",
+            status: "ステータス",
+            action: "アクション",
+            previous: "前",
+            next: "次",
+            footerText: "&copy; 2024 FMS在庫。全著作権所有。",
+            contactUs: "お問い合わせ:",
+            supportEmail: "support@example.com",
+            notifications: "通知"
+        },
+        el: {
+            title: "FMS Απογραφή",
+            dashboard: "Πίνακας Ελέγχου",
+            crops: "Καλλιέργειες",
+            livestock: "Ζώα",
+            fields: "Πεδία",
+            expenses: "Έξοδα",
+            inventory: "Απογραφή",
+            orders: "Παραγγελίες",
+            labour: "Εργασία",
+            products: "Προϊόντα",
+            searchPlaceholder: "Αναζητήστε εδώ...",
+            addNewItem: "+ Προσθήκη Νέου Στοιχείου",
+            export: "Εξαγωγή",
+            generateReport: "Δημιουργία Αναφοράς",
+            itemName: "Όνομα Στοιχείου",
+            category: "Κατηγορία",
+            quantity: "Ποσότητα",
+            unit: "Μονάδα",
+            lastUpdated: "Τελευταία Ενημέρωση",
+            status: "Κατάσταση",
+            action: "Ενέργεια",
+            previous: "Προηγούμενος",
+            next: "Επόμενος",
+            footerText: "&copy; 2024 FMS Απογραφή. Όλα τα δικαιώματα διατηρούνται.",
+            contactUs: "Επικοινωνήστε μαζί μας:",
+            supportEmail: "support@example.com",
+            notifications: "Ειδοποιήσεις"
+        },
+        de: {
+            title: "FMS Inventar",
+            dashboard: "Dashboard",
+            crops: "Pflanzen",
+            livestock: "Vieh",
+            fields: "Felder",
+            expenses: "Ausgaben",
+            inventory: "Inventar",
+            orders: "Bestellungen",
+            labour: "Arbeit",
+            products: "Produkte",
+            searchPlaceholder: "Hier suchen...",
+            addNewItem: "+ Neues Element hinzufügen",
+            export: "Exportieren",
+            generateReport: "Bericht erstellen",
+            itemName: "Artikelname",
+            category: "Kategorie",
+            quantity: "Menge",
+            unit: "Einheit",
+            lastUpdated: "Zuletzt aktualisiert",
+            status: "Status",
+            action: "Aktion",
+            previous: "Vorherige",
+            next: "Nächste",
+            footerText: "&copy; 2024 FMS Inventar. Alle Rechte vorbehalten.",
+            contactUs: "Kontaktieren Sie uns:",
+            supportEmail: "support@example.com",
+            notifications: "Benachrichtigungen"
+        },
+        zh: {
+            title: "FMS 库存",
+            dashboard: "仪表板",
+            crops: "农作物",
+            livestock: "牲畜",
+            fields: "田地",
+            expenses: "开支",
+            inventory: "库存",
+            orders: "订单",
+            labour: "劳动",
+            products: "产品",
+            searchPlaceholder: "在这里搜索...",
+            addNewItem: "+ 添加新项目",
+            export: "导出",
+            generateReport: "生成报告",
+            itemName: "项目名称",
+            category: "类别",
+            quantity: "数量",
+            unit: "单位",
+            lastUpdated: "最后更新",
+            status: "状态",
+            action: "操作",
+            previous: "上一个",
+            next: "下一个",
+            footerText: "&copy; 2024 FMS 库存。保留所有权利。",
+            contactUs: "联系我们：",
+            supportEmail: "support@example.com",
+            notifications: "通知"
+        },
+        ta: {
+            title: "FMS கையிருப்பு",
+            dashboard: "கட்டுப்படுத்தல்",
+            crops: "செயின்கள்",
+            livestock: "மட்டிகள்",
+            fields: "புலங்கள்",
+            expenses: "செலவுகள்",
+            inventory: "கையிருப்பு",
+            orders: "ஆர்டர்கள்",
+            labour: "தொழிலாளர்கள்",
+            products: "தயாரிப்புகள்",
+            searchPlaceholder: "இங்கே தேடவும்...",
+            addNewItem: "+ புதிய உருப்படியைச் சேர்க்கவும்",
+            export: "ஏற்றுமதி",
+            generateReport: "அறிக்கையை உருவாக்கவும்",
+            itemName: "உருப்படியின் பெயர்",
+            category: "வகை",
+            quantity: "அளவு",
+            unit: "அலகு",
+            lastUpdated: "கடைசி புதுப்பிப்பு",
+            status: "நிலை",
+            action: "செயல்",
+            previous: "முந்தைய",
+            next: "அடுத்த",
+            footerText: "&copy; 2024 FMS கையிருப்பு. அனைத்து உரிமைகளும் காப்பு.",
+            contactUs: "எங்களுடன் தொடர்புகொள்ளவும்:",
+            supportEmail: "support@example.com",
+            notifications: "அறிக்கைகள்"
+        },
+        // Additional languages can be added here...
+        
+    };
+
+    function updateContent(language) {
+        // Change the title of the page
+        document.title = translations[language].title;
+
+        // Update sidebar links
+        document.querySelectorAll('nav .translate').forEach(item => {
+            item.textContent = translations[language][item.dataset.translate];
+        });
+
+        // Update header inputs and buttons
+        document.querySelectorAll('.translate').forEach(item => {
+            if (item.tagName.toLowerCase() === 'input') {
+                item.placeholder = translations[language][item.dataset.translate];
+            } else {
+                item.textContent = translations[language][item.dataset.translate];
+            }
+        });
+
+        // Update table headers
+        const tableHeaders = document.querySelectorAll("#inventory-table th");
+        tableHeaders.forEach(header => {
+            header.textContent = translations[language][header.dataset.translate];
+        });
+
+        // Update footer content
+        const footer = document.querySelector("footer");
+        footer.innerHTML = `${translations[language].footerText} <br> ${translations[language].contactUs} <a href="mailto:${translations[language].supportEmail}">${translations[language].supportEmail}</a>`;
+    }
+
+    // Event listener for language selection change
+    document.getElementById("source-languages").addEventListener("change", function () {
+        const selectedLanguage = this.value;
+        updateContent(selectedLanguage);
+    });
+
+    // Initial content update for the default language (English)
+    updateContent("en");
+
+    // Other existing script code for managing notifications, generating reports, etc. goes here...
+});
+*/

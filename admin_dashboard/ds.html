@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <!-- Google Charts API -->
+    <script src="https://www.gstatic.com/charts/loader.js"></script>
+    
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+
+    <!-- Custom CSS (optional) -->
+    <link rel="stylesheet" href="dashboard.css">
+    <style>
+        /* Increased size for chart containers */
+        .chart {
+            width: 100%; /* Use full width of parent */
+            height: 400px; /* Set a fixed height for better visibility */
+            margin-bottom: 20px; /* Add some space below each chart */
+        }
+
+        .stat-card {
+            transition: background-color 0.5s ease; /* Smooth transition for background color */
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard d-flex">
+        <!-- Sidebar -->
+        <aside class="sidebar bg-light p-3">
+            <h2 class="text-primary"><i class="fas fa-tractor"></i> <span data-translate="farmingSystem">Farming Management System</span></h2>
+            <nav>
+                <ul class="list-group">
+                    <li class="list-group-item"><a href="../dashboard/dashboard.html"><i class="fas fa-tachometer-alt"></i> <span data-translate="dashboard">Dashboard</span></a></li>
+                    <li class="list-group-item"><a href="../crops/index.html"><i class="fas fa-seedling"></i> <span data-translate="crops">Crops</span></a></li>
+                    <li class="list-group-item"><a href="#"><i class="fas fa-paw"></i> <span data-translate="livestock">Livestock</span></a></li>
+                    <li class="list-group-item"><a href="#"><i class="fas fa-map-marked-alt"></i> <span data-translate="fields">Fields</span></a></li>
+                    <li class="list-group-item"><a href="#"><i class="fas fa-file-alt"></i> <span data-translate="reports">Reports</span></a></li>
+                    <li class="list-group-item"><a href="../inventory/index.html"><i class="fas fa-warehouse"></i> <span data-translate="inventory">Inventory</span></a></li>
+                    <li class="list-group-item"><a href="../order/index.html"><i class="fas fa-boxes"></i> <span data-translate="orders">Orders</span></a></li>
+                    <li class="list-group-item"><a href="#"><i class="fas fa-tasks"></i> <span data-translate="products">Products</span></a></li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer mt-4">
+                <a href="../Helpmate-AI-main/index.html" class="btn btn-outline-primary btn-sm d-block mb-2"><i class="fas fa-headset"></i> <span data-translate="support">Support</span></a>
+                <a href="#" class="btn btn-outline-secondary btn-sm d-block mb-2" data-bs-toggle="modal" data-bs-target="#profileModal"><i class="fas fa-cogs"></i> <span data-translate="settings">Settings</span></a>
+                <button class="btn btn-danger btn-sm d-block" onclick="signOut()"><span data-translate="signOut">Sign Out</span></button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content container-fluid">
+            <!-- Header with Search and Profile -->
+            <header class="d-flex justify-content-between align-items-center p-3 border-bottom">
+                <div class="search-language d-flex">
+                    <input type="text" class="form-control me-2" placeholder="Search here..." id="search-bar">
+                    <button id="search-btn" class="btn btn-primary"><i class="fas fa-search"></i></button>
+                    
+                    <select id="language-selector" class="form-select ms-3" onchange="changeLanguage()">
+                        <option value="en">English</option>
+                        <option value="fr">French</option>
+                        <option value="zu">Zulu</option>
+                        <option value="st">Sesotho</option>
+                        <option value="zh">Chinese</option>
+                        <option value="af">Afrikaans</option>
+                    </select>
+                </div>
+
+                <div class="user-profile d-flex align-items-center">
+                    <span id="user-name" class="me-2">Hi, Username</span> <!-- Username will be replaced dynamically -->
+                    <img id="profile-pic" src="default-profile.png" alt="Profile Picture" class="rounded-circle me-2" style="width: 40px; height: 40px;">
+                    <!-- Edit Profile Modal -->
+<div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="profileModalLabel"><span data-translate="editProfile">Edit Profile</span></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="profile-form">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Name</label>
+                        <input type="text" class="form-control" id="name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="surname" class="form-label">Surname</label>
+                        <input type="text" class="form-control" id="surname" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="address" class="form-label">Address</label>
+                        <input type="text" class="form-control" id="address" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="contact" class="form-label">Contact</label>
+                        <input type="text" class="form-control" id="contact" required>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="save-profile-btn">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+                </div>
+            </header>
+
+            <!-- Stats Overview -->
+            <section class="stats-overview row text-center mt-4" id="stats-overview">
+                <div class="col-md-4">
+                    <div class="stat-card p-3 border rounded">
+                        <i class="fas fa-seedling fa-2x text-success"></i>
+                        <p class="mt-2"><span data-translate="totalCrops">300 Total Crops</span></p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="stat-card p-3 border rounded">
+                        <i class="fas fa-paw fa-2x text-warning"></i>
+                        <p class="mt-2"><span data-translate="totalLivestock">120 Total Livestock</span></p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="stat-card p-3 border rounded">
+                        <i class="fas fa-users fa-2x text-primary"></i>
+                        <p class="mt-2"><span data-translate="totalEmployees">85 Total Employees</span></p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Charts Section -->
+            <section class="charts row mt-4">
+                <div id="revenue-chart" class="chart col-md-6"></div>
+                <div id="yield-chart" class="chart col-md-6"></div>
+                <div id="top-products-chart" class="chart col-md-6 mt-4"></div>
+                <div id="soil-moisture-chart" class="chart col-md-6 mt-4"></div>
+            </section>
+
+            <!-- Tasks and Weather Section -->
+            <section class="tasks-weather row mt-4">
+                <div id="tasks" class="tasks col-md-6">
+                    <h3><i class="fas fa-tasks"></i> <span data-translate="tasks">Tasks</span></h3>
+                    <ul class="list-group">
+                        <li class="list-group-item"><span data-translate="checkFieldACrops">Check Field A Crops - <i class="fas fa-check-circle text-success"></i> <span data-translate="completed">Completed</span></span></li>
+                        <li class="list-group-item"><span data-translate="trimFarmArea">Trim Farm Area - <i class="fas fa-spinner text-warning"></i> <span data-translate="inProgress">In Progress</span></span></li>
+                        <li class="list-group-item"><span data-translate="assembleTools">Assemble Tools - <i class="fas fa-times-circle text-danger"></i> <span data-translate="incomplete">Incomplete</span></span></li>
+                    </ul>
+                </div>
+                <div id="weather" class="weather col-md-6">
+                    <h3><i class="fas fa-cloud-sun"></i> <span data-translate="weather">Weather</span></h3>
+                    <p><span data-translate="currentWeather">Current Weather: 25°C, Sunny</span></p>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom JS -->
+    <script src="dashboard.js"></script>
+    <script>
+        const translations = {
+            en: {
+                farmingSystem: "Farming Management System",
+                dashboard: "Dashboard",
+                crops: "Crops",
+                livestock: "Livestock",
+                fields: "Fields",
+                reports: "Reports",
+                inventory: "Inventory",
+                orders: "Orders",
+                products: "Products",
+                support: "Support",
+                settings: "Settings",
+                signOut: "Sign Out",
+                profile: "Profile",
+                editProfile: "Edit Profile",
+                changePicture: "Change Picture",
+                totalCrops: "300 Total Crops",
+                totalLivestock: "120 Total Livestock",
+                totalEmployees: "85 Total Employees",
+                tasks: "Tasks",
+                checkFieldACrops: "Check Field A Crops",
+                completed: "Completed",
+                trimFarmArea: "Trim Farm Area",
+                inProgress: "In Progress",
+                assembleTools: "Assemble Tools",
+                incomplete: "Incomplete",
+                weather: "Weather",
+                currentWeather: "Current Weather: 25°C, Sunny"
+            },
+            fr: {
+                farmingSystem: "Système de Gestion Agricole",
+                dashboard: "Tableau de Bord",
+                crops: "Cultures",
+                livestock: "Bétail",
+                fields: "Champs",
+                reports: "Rapports",
+                inventory: "Inventaire",
+                orders: "Commandes",
+                products: "Produits",
+                support: "Assistance",
+                settings: "Paramètres",
+                signOut: "Déconnexion",
+                profile: "Profil",
+                editProfile: "Modifier le Profil",
+                changePicture: "Changer d'Image",
+                totalCrops: "300 Cultures Totales",
+                totalLivestock: "120 Bétail Total",
+                totalEmployees: "85 Employés Totaux",
+                tasks: "Tâches",
+                checkFieldACrops: "Vérifier les Cultures du Champ A",
+                completed: "Terminé",
+                trimFarmArea: "Tailler la Zone Agricole",
+                inProgress: "En Cours",
+                assembleTools: "Assembler les Outils",
+                incomplete: "Incomplet",
+                weather: "Météo",
+                currentWeather: "Météo Actuelle: 25°C, Ensoleillé"
+            },
+            zu: {
+                farmingSystem: "Uhlelo Lokuphathwa Kwezimboni",
+                dashboard: "Ithuluzi",
+                crops: "Izitshalo",
+                livestock: "Izinkomo",
+                fields: "Amaphuzu",
+                reports: "Izingxelo",
+                inventory: "Imali",
+                orders: "Ama-oda",
+                products: "Imikhiqizo",
+                support: "Usizo",
+                settings: "Izilungiselelo",
+                signOut: "Phuma",
+                profile: "Iphrofayela",
+                editProfile: "Hlela Iphrofayela",
+                changePicture: "Shintsha Isithombe",
+                totalCrops: "300 Izitshalo Zephezulu",
+                totalLivestock: "120 Izinkomo Zephezulu",
+                totalEmployees: "85 Abasebenzi Abakhulu",
+                tasks: "Imisebenzi",
+                checkFieldACrops: "Bheka Izitshalo Zesimo A",
+                completed: "KuQediwe",
+                trimFarmArea: "Gqoka Indawo Yezolimo",
+                inProgress: "Kwenzeka",
+                assembleTools: "Hlanganisa Amathuluzi",
+                incomplete: "Akuphelile",
+                weather: "Isimo Sezulu",
+                currentWeather: "Isimo Sezulu: 25°C, Izeluli"
+            },
+            st: {
+                farmingSystem: "Mokhatlo oa Ts'ebetso ea Temothuo",
+                dashboard: "Dashboard",
+                crops: "Mehaho",
+                livestock: "Livestock",
+                fields: "Mefuta",
+                reports: "Lethathamo",
+                inventory: "Bokhoni",
+                orders: "Mala",
+                products: "Sehlahisoa",
+                support: "Ts'ehetso",
+                settings: "Settings",
+                signOut: "Mokhoa",
+                profile: "Iphrofayela",
+                editProfile: "Hlela Iphrofayela",
+                changePicture: "Shintsha Setšoantšo",
+                totalCrops: "300 Mehaho e Felletseng",
+                totalLivestock: "120 Livestock e Felletseng",
+                totalEmployees: "85 Basebetsi ba Felletseng",
+                tasks: "Mesebetsi",
+                checkFieldACrops: "Lekola Mehaho ea Noka A",
+                completed: "E Felletse",
+                trimFarmArea: "Cheka Sebaka sa Temothuo",
+                inProgress: "Ho Ts'ebetso",
+                assembleTools: "Kenya Lisebelisoa",
+                incomplete: "E sa Felletseng",
+                weather: "Boemo ba Leholimo",
+                currentWeather: "Boemo ba Leholimo: 25°C, Letsatsi"
+            },
+            zh: {
+                farmingSystem: "农业管理系统",
+                dashboard: "仪表板",
+                crops: "农作物",
+                livestock: "牲畜",
+                fields: "田地",
+                reports: "报告",
+                inventory: "库存",
+                orders: "订单",
+                products: "产品",
+                support: "支持",
+                settings: "设置",
+                signOut: "退出",
+                profile: "个人资料",
+                editProfile: "编辑个人资料",
+                changePicture: "更改照片",
+                totalCrops: "300 总农作物",
+                totalLivestock: "120 总牲畜",
+                totalEmployees: "85 总员工",
+                tasks: "任务",
+                checkFieldACrops: "检查 A 田地农作物",
+                completed: "完成",
+                trimFarmArea: "修剪农场区域",
+                inProgress: "进行中",
+                assembleTools: "组装工具",
+                incomplete: "不完整",
+                weather: "天气",
+                currentWeather: "当前天气：25°C，晴"
+            },
+            af: {
+                farmingSystem: "Boerdery Bestuurstelsel",
+                dashboard: "Dashbord",
+                crops: "Gewasse",
+                livestock: "Vee",
+                fields: "Velde",
+                reports: "Verslae",
+                inventory: "Inventaris",
+                orders: "Bestellings",
+                products: "Produkte",
+                support: "Ondersteuning",
+                settings: "Instellings",
+                signOut: "Teken Uit",
+                profile: "Profiel",
+                editProfile: "Wysig Profiel",
+                changePicture: "Verander Prent",
+                totalCrops: "300 Totale Gewasse",
+                totalLivestock: "120 Totale Vee",
+                totalEmployees: "85 Totale Werknemers",
+                tasks: "Take",
+                checkFieldACrops: "Kontroleer A Gewasse",
+                completed: "Voltooi",
+                trimFarmArea: "Sny Boerdery Gebied",
+                inProgress: "Besig",
+                assembleTools: "Versamel Gereedskap",
+                incomplete: "Onvoltooid",
+                weather: "Weer",
+                currentWeather: "Huidige Weer: 25°C, Sonskyn"
+            }
+        };
+
+        function changeLanguage() {
+            const language = document.getElementById("language-selector").value;
+            translatePage(language);
+        }
+
+        function translatePage(language) {
+            const elementsToTranslate = document.querySelectorAll("[data-translate]");
+            elementsToTranslate.forEach((element) => {
+                const key = element.getAttribute("data-translate");
+                if (translations[language] && translations[language][key]) {
+                    element.innerHTML = translations[language][key];
+                }
+            });
+        }
+
+        // Load saved language preference on page load
+        window.onload = function() {
+            const savedLanguage = localStorage.getItem('language') || 'en'; // Default to English
+            document.getElementById("language-selector").value = savedLanguage;
+            translatePage(savedLanguage);
+        };
+
+        // Save the selected language to local storage
+        document.getElementById("language-selector").addEventListener("change", function() {
+            localStorage.setItem('language', this.value);
+        });
+
+        // Save Profile Data
+document.getElementById("save-profile-btn").addEventListener("click", function() {
+    const name = document.getElementById("name").value;
+    const surname = document.getElementById("surname").value;
+    const address = document.getElementById("address").value;
+    const contact = document.getElementById("contact").value;
+
+    // Save data to local storage or use it as needed
+    localStorage.setItem("name", name);
+    localStorage.setItem("surname", surname);
+    localStorage.setItem("address", address);
+    localStorage.setItem("contact", contact);
+
+    // Close the modal
+    var modal = bootstrap.Modal.getInstance(document.getElementById('profileModal'));
+    modal.hide();
+
+    // Optionally, refresh the page or update the display
+    alert("Profile updated successfully!");
+});
+
+
+    </script>
+</body>
+</html>

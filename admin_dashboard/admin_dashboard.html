@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <!-- Google Charts API -->
+    <script src="https://www.gstatic.com/charts/loader.js"></script>
+    
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+
+    <!-- Custom CSS (optional) -->
+    <link rel="stylesheet" href="dashboard.css">
+    <style>
+        /* Increased size for chart containers */
+        .chart {
+            width: 100%; /* Use full width of parent */
+            height: 400px; /* Set a fixed height for better visibility */
+            margin-bottom: 20px; /* Add some space below each chart */
+        }
+
+        .stat-card {
+            transition: background-color 0.5s ease; /* Smooth transition for background color */
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard d-flex">
+        <!-- Sidebar -->
+        <aside class="sidebar bg-light p-3">
+            <h2 class="text-primary"><i class="fas fa-tractor"></i> Farming Management System</h2>
+            <nav>
+                <ul class="list-group">
+                    <li class="list-group-item"><a href="../admin_dashboard/admin_dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                    <li class="list-group-item"><a href="../crops/index.html"><i class="fas fa-seedling"></i> Crops</a></li>
+                    <li class="list-group-item"><a href="../livestock/index.html"><i class="fas fa-paw"></i> Livestock</a></li>
+                    <li class="list-group-item"><a href="../Fields/fields.html"><i class="fas fa-map-marked-alt"></i> Fields</a></li>
+                    <li class="list-group-item"><a href="../reports/reports.html"><i class="fas fa-file-alt"></i> Reports</a></li>
+                    <li class="list-group-item"><a href="../inventory/index.html"><i class="fas fa-warehouse"></i> Inventory</a></li>
+                    <li class="list-group-item"><a href="../order/index.html"><i class="fas fa-boxes"></i> Orders</a></li>
+                    <li class="list-group-item"><a href="../products/products.html"><i class="fas fa-tasks"></i> Products</a></li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer mt-4">
+                <a href="http://localhost:5173/" class="btn btn-outline-primary btn-sm d-block mb-2"><i class="fas fa-headset"></i> Support</a>
+                <a href="settings.html" class="btn btn-outline-secondary btn-sm d-block mb-2" data-bs-toggle="modal" data-bs-target="#profileModal"><i class="fas fa-cogs"></i> Settings</a>
+                <button class="signout-button" onclick="window.location.href='../home/home.html'">Sign Out</button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content container-fluid">
+            <!-- Header with Search and Profile -->
+            <header class="d-flex justify-content-between align-items-center p-3 border-bottom">
+                <div class="search-language d-flex">
+                    <input type="text" class="form-control me-2" placeholder="Search here..." id="search-bar">
+                    <button id="search-btn" class="btn btn-primary"><i class="fas fa-search"></i></button>
+                    
+                </div>
+
+                <div class="user-profile d-flex align-items-center">
+                    <span id="user-name" class="me-2">Hi, Username</span> <!-- Username will be replaced dynamically -->
+                    <img id="profile-pic" src="default-profile.png" alt="Profile Picture" class="rounded-circle me-2" style="width: 40px; height: 40px;">
+                    <div class="dropdown ms-3">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Profile
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#" id="edit-profile">Edit Profile</a></li>
+                            <li><a class="dropdown-item" href="#" id="change-picture" data-bs-toggle="modal" data-bs-target="#profileModal">Change Picture</a></li>
+                            <li><a class="dropdown-item" href="#" id="sign-out">Sign Out</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Stats Overview -->
+            <section class="stats-overview row text-center mt-4">
+                <div class="col-md-4">
+                    <div class="stat-card p-3 border rounded">
+                        <i class="fas fa-seedling fa-2x text-success"></i>
+                        <p class="mt-2">300 Total Crops</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="stat-card p-3 border rounded">
+                        <i class="fas fa-paw fa-2x text-warning"></i>
+                        <p class="mt-2">120 Total Livestock</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="stat-card p-3 border rounded">
+                        <i class="fas fa-users fa-2x text-primary"></i>
+                        <p class="mt-2">85 Total Employees</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Charts Section -->
+            <section class="charts row mt-4">
+                <div id="revenue-chart" class="chart col-md-6"></div>
+                <div id="yield-chart" class="chart col-md-6"></div>
+                <div id="top-products-chart" class="chart col-md-6 mt-4"></div>
+                <div id="soil-moisture-chart" class="chart col-md-6 mt-4"></div>
+            </section>
+
+            <!-- Tasks and Weather Section -->
+            <section class="tasks-weather row mt-4">
+                <div id="tasks" class="tasks col-md-6">
+                    <h3><i class="fas fa-tasks"></i> Tasks</h3>
+                    <ul class="list-group">
+                        <li class="list-group-item">Check Field A Crops - <i class="fas fa-check-circle text-success"></i> Completed</li>
+                        <li class="list-group-item">Trim Farm Area - <i class="fas fa-spinner text-warning"></i> In Progress</li>
+                        <li class="list-group-item">Assemble Tools - <i class="fas fa-times-circle text-danger"></i> Incomplete</li>
+                    </ul>
+                </div>
+                <div id="weather" class="weather col-md-6">
+                    <h3><i class="fas fa-cloud-sun"></i> Weather</h3>
+                    <p><i class="fas fa-calendar-day"></i> Tuesday</p>
+                    <p><i class="fas fa-thermometer-half"></i> 20°C, Sunny</p>
+                    <p><i class="fas fa-tint"></i> Precipitation: 0%</p>
+                    <p><i class="fas fa-water"></i> Humidity: 50%</p>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <footer class="text-center mt-4 p-3 bg-light">
+        <p class="translate" data-translate="footerText">&copy; 2024 FMS Inventory. All Rights Reserved.</p>
+        <p class="translate" data-translate="contactUs">Contact us: <a href="mailto:support@example.com" class="translate" data-translate="supportEmail">support@example.com</a></p>
+    </footer>
+
+    <!-- Profile Modal -->
+<div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="profileModalLabel">Edit Profile</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="profile-form">
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Username</label>
+                        <input type="text" class="form-control" id="username" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Name</label>
+                        <input type="text" class="form-control" id="name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="surname" class="form-label">Surname</label>
+                        <input type="text" class="form-control" id="surname" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="contact" class="form-label">Contact</label>
+                        <input type="text" class="form-control" id="contact" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="address" class="form-label">Address</label>
+                        <input type="text" class="form-control" id="address" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="language" class="form-label">Language</label>
+                        <select class="form-select" id="language" required>
+                            <option value="en">English</option>
+                            <option value="sesotho">Sesotho</option>
+                            <option value="zulu">Zulu</option>
+                            <option value="chinese">Chinese</option>
+                            <option value="french">French</option>
+                            <option value="afrikaans">Afrikaans</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="profile-pic-upload" class="form-label">Profile Picture</label>
+                        <input type="file" class="form-control" id="profile-pic-upload" accept="image/*">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Custom JS -->
+    <script>
+
+
+
+        // Get the username from localStorage and display it
+        window.onload = function() {
+            const username = localStorage.getItem('username');
+            const name = localStorage.getItem('name');
+            const surname = localStorage.getItem('surname');
+            const contact = localStorage.getItem('contact');
+            const address = localStorage.getItem('address');
+            const profilePic = localStorage.getItem('profilePic');
+
+            if (username) {
+                document.getElementById('user-name').textContent = `Hi, ${username}`;
+                document.getElementById('username').value = username;
+                document.getElementById('name').value = name || '';
+                document.getElementById('surname').value = surname || '';
+                document.getElementById('contact').value = contact || '';
+                document.getElementById('address').value = address || '';
+                document.getElementById('profile-pic').src = profilePic || 'default-profile.png';
+            } else {
+                document.getElementById('user-name').textContent = "Hi, Guest";
+            }
+
+            // Start color change function for stats overview
+            changeStatCardColors();
+        };
+
+        function signOut() {
+            localStorage.removeItem('username');
+            localStorage.removeItem('name');
+            localStorage.removeItem('surname');
+            localStorage.removeItem('contact');
+            localStorage.removeItem('address');
+            localStorage.removeItem('profilePic');
+            window.location.href = 'home.html'; // Redirect to home page
+        }
+
+        function changeStatCardColors() {
+            const colors = ['#f8d7da', '#d1ecf1', '#d4edda', '#fff3cd', '#cce5ff', '#e2e3e5'];
+            let index = 0;
+
+            setInterval(() => {
+                const statCards = document.querySelectorAll('.stat-card');
+                statCards.forEach(card => {
+                    card.style.backgroundColor = colors[index];
+                });
+
+                index = (index + 1) % colors.length; // Cycle through colors
+            }, 5000); // Change color every 5 seconds
+        }
+
+        // Search functionality
+        document.getElementById('search-btn').addEventListener('click', function() {
+            const query = document.getElementById('search-bar').value;
+            alert('Search functionality not implemented. Search query: ' + query);
+        });
+
+        // Load Google Charts and draw charts
+        google.charts.load('current', { 'packages': ['corechart'] });
+        google.charts.setOnLoadCallback(drawCharts);
+
+        function drawCharts() {
+            drawRevenueChart();
+            drawYieldChart();
+            drawTopProductsChart();
+            drawSoilMoistureChart();
+        }
+
+        function drawRevenueChart() {
+            var data = google.visualization.arrayToDataTable([
+                ['Year', 'Revenue'],
+                ['2019', 1000],
+                ['2020', 1170],
+                ['2021', 660],
+                ['2022', 1030]
+            ]);
+            var options = {
+                title: 'Total Revenue',
+                legend: { position: 'bottom' }
+            };
+
+            var chart = new google.visualization.LineChart(document.getElementById('revenue-chart'));
+            chart.draw(data, options);
+        }
+
+        function drawYieldChart() {
+            var data = google.visualization.arrayToDataTable([
+                ['Year', 'Yield'],
+                ['2019', 400],
+                ['2020', 460],
+                ['2021', 1120],
+                ['2022', 540]
+            ]);
+            var options = {
+                title: 'Yield Predictions',
+                legend: { position: 'bottom' }
+            };
+
+            var chart = new google.visualization.LineChart(document.getElementById('yield-chart'));
+            chart.draw(data, options);
+        }
+
+        function drawTopProductsChart() {
+            var data = google.visualization.arrayToDataTable([
+                ['Product', 'Quantity Sold'],
+                ['Wheat', 300],
+                ['Corn', 200],
+                ['Rice', 150],
+                ['Soybeans', 100]
+            ]);
+            var options = {
+                title: 'Top Products',
+                pieHole: 0.4,
+                legend: { position: 'bottom' }
+            };
+
+            var chart = new google.visualization.PieChart(document.getElementById('top-products-chart'));
+            chart.draw(data, options);
+        }
+
+        function drawSoilMoistureChart() {
+            var data = google.visualization.arrayToDataTable([
+                ['Field', 'Moisture Level'],
+                ['Field A', 20],
+                ['Field B', 40],
+                ['Field C', 30],
+                ['Field D', 10]
+            ]);
+            var options = {
+                title: 'Soil Moisture Levels',
+                hAxis: { title: 'Field' },
+                vAxis: { title: 'Moisture Level (%)' },
+                legend: { position: 'bottom' }
+            };
+
+            var chart = new google.visualization.BarChart(document.getElementById('soil-moisture-chart'));
+            chart.draw(data, options);
+        }
+
+        // Profile update form submission
+        document.getElementById('profile-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            // Get form values
+            const username = document.getElementById('username').value;
+            const name = document.getElementById('name').value;
+            const surname = document.getElementById('surname').value;
+            const contact = document.getElementById('contact').value;
+            const address = document.getElementById('address').value;
+            const profilePicUpload = document.getElementById('profile-pic-upload');
+
+            // Handle profile picture upload
+            if (profilePicUpload.files.length > 0) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    localStorage.setItem('profilePic', e.target.result);
+                    document.getElementById('profile-pic').src = e.target.result; // Update profile picture
+                };
+                reader.readAsDataURL(profilePicUpload.files[0]);
+            }
+
+            // Save data to local storage
+            localStorage.setItem('username', username);
+            localStorage.setItem('name', name);
+            localStorage.setItem('surname', surname);
+            localStorage.setItem('contact', contact);
+            localStorage.setItem('address', address);
+
+            // Close the modal
+            var profileModal = bootstrap.Modal.getInstance(document.getElementById('profileModal'));
+            profileModal.hide();
+        });
+    </script>
+</body>
+</html>
