@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Livestock - Farming Management System</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="livestock.css">
+</head>
+<body>
+
+    <!-- Sidebar Navigation -->
+    <div class="sidebar">
+        <ul>
+            <li><a href="../home/home.html">Home</a></li>
+            <li><a href="../calender/calender.html">Calendar</a></li>
+            <li><a href="../crops information/crops.html">Crops</a></li>
+            <li><a href="../livestock information/livestock.html" class="active">Livestock</a></li>
+        </ul>
+    </div>
+
+    <!-- Main Content Section -->
+    <div class="main-content">
+        <header>
+            <h1>Livestock Information</h1>
+            <input type="text" placeholder="Search Livestock..." id="searchBar" onkeyup="searchFunction()">
+        </header>
+
+        <!-- Cards Section -->
+        <div class="cards-container" id="cardsContainer">
+            <a href="https://www.google.com/search?q=Cattle+farming" target="_blank">
+                <div class="card" data-title="Cattle">
+                    <img src="livestock2.jpg" alt="Cattle">
+                    <h2>Cattle</h2>
+                    <p>Learn about cattle farming, breeding, and management techniques.</p>
+                </div>
+            </a>
+
+            <a href="https://www.google.com/search?q=Goat+farming" target="_blank">
+                <div class="card" data-title="Goats">
+                    <img src="LIVESTOCK4.jpg" alt="Goats">
+                    <h2>Goats</h2>
+                    <p>Discover the best practices for raising goats for meat or milk production.</p>
+                </div>
+            </a>
+            
+            <a href="https://www.google.com/search?q=Poultry+farming" target="_blank">
+                <div class="card" data-title="Poultry">
+                    <img src="livestock1.jpg" alt="Poultry">
+                    <h2>Poultry</h2>
+                    <p>Explore poultry farming, bird health management, and egg production.</p>
+                </div>
+            </a>
+
+            <a href="https://www.foodformzansi.co.za/how-to-start-your-own-pig-farm/" target="_blank">
+                <div class="card" data-title="pigs">
+                    <img src="../crops information/piggs.jfif" alt="pigs">
+                    <h2>pigs</h2>
+                    <p>Explore piggs farming, piggs health management, and egg production.</p>
+                </div>
+            </a>
+        </div>
+
+        <!-- Videos Section -->
+        <div class="container mt-4" id="videosContainer">
+            <h2 class="text-center">Educational Videos</h2>
+            <div class="list-group">
+                <!-- Video 1 -->
+                <div class="list-group-item" data-title="Cattle Farming Practices">
+                    <h3>Cattle Farming Practices</h3>
+                    <video width="100%" controls muted>
+                        <source src="Livestock_farming_in_SOUTH_AFRICA,_BORAN__a_thriving_Cattle_breed_for_sustainable_grazing___browsing(720p).mp4" type="video/mp4"> <!-- Replace with actual video path -->
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+                <!-- Video 2 -->
+                <div class="list-group-item" data-title="Goat Management Techniques">
+                    <h3>Goat Management Techniques</h3>
+                    <video width="100%" controls muted>
+                        <source src="The_5_Essential_Steps_for_Successful_Reproductive_Management_of_Boer_Goats!(1080p).mp4" type="video/mp4"> <!-- Replace with actual video path -->
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+
+                <!-- Video 3 -->
+                <div class="list-group-item" data-title="Poultry Health Management">
+                    <h3>Poultry Health Management</h3>
+                    <video width="100%" controls muted>
+                        <source src="Functions___Deficiency_symptoms_of_minerals_in_livestock(720p).mp4" type="video/mp4"> <!-- Replace with actual video path -->
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+
+                <!-- Video 4 -->
+                <div class="list-group-item" data-title="Breeding Techniques">
+                    <h3>Breeding Techniques</h3>
+                    <video width="100%" controls muted>
+                        <source src="breeding.mp4.mp4" type="video/mp4"> <!-- Replace with actual video path -->
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+
+                <!-- Video 5 -->
+                <div class="list-group-item" data-title="Nutrition for Livestock">
+                    <h3>Nutrition for Livestock</h3>
+                    <video width="100%" controls muted>
+                        <source src="Animal nutrition_ Supplementary feeding principles.mp4" type="video/mp4"> <!-- Replace with actual video path -->
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function searchFunction() {
+            // Declare variables
+            var input, filter, cards, videos, i, txtValue;
+            input = document.getElementById('searchBar');
+            filter = input.value.toLowerCase();
+            cards = document.querySelectorAll('.cards-container .card');
+            videos = document.querySelectorAll('#videosContainer .list-group-item');
+
+            // Loop through cards and videos to hide those that don't match the search query
+            cards.forEach(card => {
+                txtValue = card.getAttribute('data-title').toLowerCase();
+                card.parentElement.style.display = txtValue.includes(filter) ? "" : "none";
+            });
+
+            videos.forEach(video => {
+                txtValue = video.getAttribute('data-title').toLowerCase();
+                video.style.display = txtValue.includes(filter) ? "" : "none";
+            });
+        }
+    </script>
+<footer class="text-center mt-4">
+    <p class="translate" data-translate="footerText">&copy; 2024 FMS Inventory. All Rights Reserved.</p>
+   
+</footer>
+</body>
+</html>
