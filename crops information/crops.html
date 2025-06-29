@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crops - Farming Management System</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="crops.css">
+</head>
+<body>
+
+    <!-- Sidebar Navigation -->
+    <div class="sidebar">
+        <ul>
+            <li><a href="../home/home.html">Home</a></li>
+            <li><a href="../calender/calender.html">Calendar</a></li>
+            <li><a href="../crops information/crops.html" class="active">Crops</a></li>
+            <li><a href="../livestock information/livestock.html">Livestock</a></li>
+        </ul>
+    </div>
+
+    <!-- Main Content Section -->
+    <div class="main-content">
+        <header>
+            <h1>Crops Information</h1>
+            <input type="text" placeholder="Search Crops or Videos..." id="searchBar" onkeyup="searchFunction()">
+        </header>
+
+        <!-- Cards Section -->
+        <div class="cards-container" id="cardsContainer">
+            <a href="https://www.google.com/search?q=Wheat+farming" target="_blank">
+                <div class="card" data-title="Wheat">
+                    <img src="wheat-crops1.png" alt="Wheat">
+                    <h2>Wheat</h2>
+                    <p>Learn about wheat farming, its seasons, and best practices.</p>
+                </div>
+            </a>
+
+            <a href="https://www.google.com/search?q=vegetable+farming" target="_blank">
+                <div class="card" data-title="Vegetables">
+                    <img src="vegetables-crops3.jpg" alt="Vegetables">
+                    <h2>Vegetables</h2>
+                    <p>Discover the best practices for growing vegetables.</p>
+                </div>
+            </a>
+            
+            <a href="https://www.britannica.com/plant/sugar-beet" target="_blank">
+                <div class="card" data-title="Sugarbeets">
+                    <img src="sugarbeets-crops2.jpg" alt="Sugarbeets">
+                    <h2>Sugarbeets</h2>
+                    <p>Learn about growing sugar beets and their agricultural value.</p>
+                </div>
+            </a>
+
+            <a href="https://www.agribook.co.za/maize-corn/" target="_blank">
+                <div class="card" data-title="corn">
+                    <img src="corn.jfif" alt="corn">
+                    <h2>corn</h2>
+                    <p>Learn about growing corns and their agricultural value.</p>
+                </div>
+            </a>
+
+            <!-- More Crop Cards... -->
+        </div>
+
+        <!-- Videos Section -->
+        <div class="container mt-4" id="videosContainer">
+            <h2 class="text-center">Educational Videos</h2>
+            <div class="list-group">
+                <!-- Video 1 -->
+                <div class="list-group-item" data-title="Wheat Farming Techniques">
+                    <h3>Wheat Farming Techniques</h3>
+                    <video width="100%" controls muted>
+                        <source src="Wheat_Farming___Wheat_Cultivation_Guide___How_to_grow_Wheat(1080p).mp4" type="video/mp4"> <!-- Replace with actual video path -->
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+
+                <!-- Video 2 -->
+                <div class="list-group-item" data-title="Vegetable Farming Guide">
+                    <h3>Vegetable Farming Guide</h3>
+                    <video width="100%" controls muted>
+                        <source src="videoplayback (4).mp4" type="video/mp4"> <!-- Replace with actual video path -->
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+
+                <!-- Video 3 -->
+                <div class="list-group-item" data-title="Sugar Beet Farming">
+                    <h3>Sugar Beet Farming</h3>
+                    <video width="100%" controls muted>
+                        <source src="Sugar beet Cultivation (Complete Information) _ How Sugar is Made_ _ Sugar beet Farming.mp4" type="video/mp4"> <!-- Replace with actual video path -->
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+
+                <!-- Video 4 -->
+                <div class="list-group-item" data-title="Farming Tools for Crops">
+                    <h3>Farming Tools for Crops</h3>
+                    <video width="100%" controls muted>
+                        <source src="Top_10_Agriculture_Machines_Videos(1080p).mp4" type="video/mp4"> <!-- Replace with actual video path -->
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+
+                <!-- Video 5 -->
+                <div class="list-group-item" data-title="Crop Rotation Techniques">
+                    <h3>Crop Rotation Techniques</h3>
+                    <video width="100%" controls muted>
+                        <source src="Crop_Rotation__A_Way_To_Boost_Your_Yields(1080p).mp4" type="video/mp4"> <!-- Replace with actual video path -->
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <!-- JavaScript for Search Function -->
+    <script>
+        function searchFunction() {
+            // Declare variables
+            var input, filter, cards, videos, i, txtValue;
+            input = document.getElementById('searchBar');
+            filter = input.value.toLowerCase();
+            cards = document.querySelectorAll('.cards-container .card');
+            videos = document.querySelectorAll('#videosContainer .list-group-item');
+
+            // Loop through cards and videos to hide those that don't match the search query
+            cards.forEach(card => {
+                txtValue = card.getAttribute('data-title').toLowerCase();
+                card.parentElement.style.display = txtValue.includes(filter) ? "" : "none";
+            });
+
+            videos.forEach(video => {
+                txtValue = video.getAttribute('data-title').toLowerCase();
+                video.style.display = txtValue.includes(filter) ? "" : "none";
+            });
+        }
+    </script>
+   </script>
+   <footer class="text-center mt-4">
+       <p class="translate" data-translate="footerText">&copy; 2024 FMS Inventory. All Rights Reserved.</p>
+   </footer>
+</body>
+</html>

@@ -1,0 +1,139 @@
+/* Global Styling */
+footer {
+    background-color: #264653;
+    color: white;
+    text-align: center;
+    padding: 15px 0; /* Define footer height */
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 60px; /* Set specific height for footer */
+}
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+}
+
+/* Sidebar Navigation */
+.sidebar {
+    width: 200px;
+    height: 100vh;
+    background-color: #3A6351;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    padding-top: 20px;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    margin-bottom: 10px;
+}
+
+.sidebar ul li a {
+    text-decoration: none;
+    color: #fff;
+    display: block;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.sidebar ul li a.active,
+.sidebar ul li a:hover {
+    background-color: #4C9A62;
+}
+
+/* Main Content */
+.main-content {
+    margin-left: 220px;
+    padding: 20px;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+header h1 {
+    font-size: 24px;
+    color: #333;
+}
+
+#searchBar {
+    padding: 10px;
+    font-size: 16px;
+    width: 300px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Cards Styling */
+.cards-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.card {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    width: 300px;
+}
+
+.card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+}
+
+.card h2 {
+    margin: 15px;
+    font-size: 20px;
+    color: #333;
+}
+
+.card p {
+    margin: 0 15px 15px;
+    color: #666;
+    font-size: 16px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .main-content {
+        margin-left: 0;
+    }
+
+    .cards-container {
+        justify-content: center;
+    }
+}
+
+footer {
+    background-color: #264653;
+    color: white;
+    text-align: center;
+    padding: 15px 0; /* Define footer height */
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 60px; /* Set specific height for footer */
+}
