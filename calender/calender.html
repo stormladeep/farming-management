@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendar</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="calender.css">
+    <style>
+        body {
+            background-image: url('../calender/calender.jpg'); /* Replace with your image path */
+            background-size: cover; /* Cover the entire page */
+            background-repeat: no-repeat; /* Prevent tiling */
+            background-position: center; /* Center the image */
+            background-attachment: fixed; /* Fixed background */
+            color: white; /* Change text color for better visibility */
+        }
+
+        .navbar {
+            background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background for navbar */
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+
+        .container {
+            background-color: white; /* Semi-transparent background for calendar */
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .calendar-table th, .calendar-table td {
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .season {
+            background-color: rgba(255, 215, 0, 0.5); /* Light yellow for season indication */
+        }
+
+        .birthing {
+            background-color: rgba(255, 105, 180, 0.5); /* Light pink for birthing */
+        }
+
+        .feeding {
+            background-color: rgba(0, 191, 255, 0.5); /* Light blue for feeding */
+        }
+
+        /* Tooltip styles */
+        .calendar-table [data-tooltip]:hover::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            background-color: black;
+            color: white;
+            border-radius: 5px;
+            padding: 5px;
+            z-index: 100;
+            white-space: nowrap;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <button id="crops-btn" class="btn btn-primary">Crops Calendar</button>
+        <button id="livestock-btn" class="btn btn-primary">Livestock Calendar</button>
+    </div>
+
+    <div class="container" id="crops-calendar">
+        <h2>CROP CALENDAR</h2>
+        <table class="table table-bordered calendar-table">
+            <thead>
+                <tr>
+                    <th>Crop</th>
+                    <th>Jan</th>
+                    <th>Feb</th>
+                    <th>Mar</th>
+                    <th>Apr</th>
+                    <th>May</th>
+                    <th>Jun</th>
+                    <th>Jul</th>
+                    <th>Aug</th>
+                    <th>Sep</th>
+                    <th>Oct</th>
+                    <th>Nov</th>
+                    <th>Dec</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Wheat</td>
+                    <td colspan="5" class="season planting" data-tooltip="Wheat Planting Season">Planting</td>
+                    <td colspan="6"></td>
+                </tr>
+                <tr>
+                    <td>Barley</td>
+                    <td colspan="3"></td>
+                    <td colspan="4" class="season growing" data-tooltip="Barley Growing Season">Growing</td>
+                    <td colspan="4"></td>
+                </tr>
+                <tr>
+                    <td>Canola</td>
+                    <td colspan="3" class="season growing" data-tooltip="Canola Growing Season">Growing</td>
+                    <td colspan="3"></td>
+                    <td colspan="4" class="season harvesting" data-tooltip="Canola Harvesting Season">Harvesting</td>
+                </tr>
+                <tr>
+                    <td>Oats</td>
+                    <td colspan="4" class="season planting" data-tooltip="Oats Planting Season">Planting</td>
+                    <td colspan="4"></td>
+                    <td colspan="4" class="season harvesting" data-tooltip="Oats Harvesting Season">Harvesting</td>
+                </tr>
+                <tr>
+                    <td>Corn</td>
+                    <td colspan="5"></td>
+                    <td colspan="4" class="season growing" data-tooltip="Corn Growing Season">Growing</td>
+                    <td colspan="2"></td>
+                </tr>
+                <tr>
+                    <td>Sunflowers</td>
+                    <td colspan="8" class="season planting" data-tooltip="Sunflowers Planting Season">Planting</td>
+                    <td colspan="4"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="container" id="livestock-calendar" style="display: none;">
+        <h2>LIVESTOCK CALENDAR</h2>
+        <table class="table table-bordered calendar-table">
+            <thead>
+                <tr>
+                    <th>Livestock</th>
+                    <th>Jan</th>
+                    <th>Feb</th>
+                    <th>Mar</th>
+                    <th>Apr</th>
+                    <th>May</th>
+                    <th>Jun</th>
+                    <th>Jul</th>
+                    <th>Aug</th>
+                    <th>Sep</th>
+                    <th>Oct</th>
+                    <th>Nov</th>
+                    <th>Dec</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Cattle</td>
+                    <td colspan="3" class="season birthing" data-tooltip="Cattle Birthing Season">Birthing</td>
+                    <td colspan="9"></td>
+                </tr>
+                <tr>
+                    <td>Chickens</td>
+                    <td colspan="4" class="season feeding" data-tooltip="Chickens Feeding Season">Feeding</td>
+                    <td colspan="8"></td>
+                </tr>
+                <!-- Add more rows for other livestock activities -->
+            </tbody>
+        </table>
+    </div>
+
+    <script src="calender.js"></script>
+</body>
+</html>

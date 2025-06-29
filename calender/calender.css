@@ -1,0 +1,90 @@
+body {
+    font-family: Arial, sans-serif;
+    background-image: url(calender.jpg); /* Replace with your image path */
+    background-size: cover; /* Cover the entire page */
+    background-repeat: no-repeat; /* Prevent tiling */
+    background-position: center; /* Center the image */
+    background-attachment: fixed;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    width: 80%;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+}
+
+.navbar {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.navbar button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.navbar button:hover {
+    background-color: #45a049;
+}
+
+h2 {
+    text-align: center;
+    color: white;
+}
+
+.calendar-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+.calendar-table th, .calendar-table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+}
+
+.calendar-table th {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.season {
+    background-color: #9ACD32;
+    color: white;
+}
+
+
+.planting {
+    background-color: #6b8e23;
+}
+
+.growing {
+    background-color: #32CD32;
+}
+
+.harvesting {
+    background-color: #FF8C00;
+}
+
+.birthing {
+    background-color: #FF4500;
+}
+
+.feeding {
+    background-color: #4682B4;
+}
