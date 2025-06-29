@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Labor Page</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Custom styles */
+        body {
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+        }
+
+        .sidebar {
+            height: 100vh;
+            background-color: #00c04b;
+            position: fixed;
+            top: 0;
+            left: 0;
+            padding-top: 20px;
+            overflow-y: auto;
+        }
+
+        .sidebar h2 {
+            text-align: center;
+            color: #ecf0f1;
+            background-color: #264653;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .sidebar ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .sidebar ul li {
+            margin: 20px 0;
+        }
+
+        .sidebar ul li a {
+            text-decoration: none;
+            color: #495057;
+            display: block;
+            padding: 12px 15px;
+            background-color: white;
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .sidebar ul li a:hover,
+        .sidebar ul li a.active {
+            background-color: #16a085;
+            color: white;
+        }
+
+        .content {
+            margin-left: 220px;
+            /* Offset for sidebar */
+            padding: 20px;
+        }
+
+        .table-container {
+            margin-bottom: 40px;
+        }
+
+        .best-employee-card {
+            width: 18rem;
+            margin-bottom: 20px;
+        }
+
+        .best-employee-card img {
+            height: 150px;
+            object-fit: cover;
+        }
+
+        .best-employees {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .section-title {
+            margin: 40px 0 20px;
+            font-weight: bold;
+        }
+
+        .search-container {
+            margin-bottom: 20px;
+        }
+
+        /* Responsive sidebar and content */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+            }
+
+            .content {
+                margin-left: 0;
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <nav class="col-md-2 sidebar">
+                <h2 class="sidebar-title">FMS</h2>
+                <ul class="nav flex-column">
+                    <li class="nav-item"><a class="nav-link" href="../admin login signup/admin_dashboard.html">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../crops/index.html"><i class="fas fa-seedling"></i>Crops</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../livestock/index.html"><i class="fas fa-paw"></i>Livestock</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../Fields/fields.html"><i class="fas fa-map-marked-alt"></i>Fields</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../report/report.html"><i class="fas fa-file-alt"></i>Reports</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../inventory/index.html"><i class="fas fa-warehouse"></i>Inventory</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="../labour/labour.html"><i class="fa fa-tasks"></i>Labour</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../order/index.html"><i class="fa fa-boxes"></i>Orders</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../products/product.html"><i class="fa fa-tasks"></i>Products</a></li>
+                </ul>
+            </nav>
+
+            <!-- Main Content -->
+            <div class="content col-md-10 offset-md-2">
+                <div class="container">
+                    <!-- Search Bar -->
+                    <div class="search-container">
+                        <input type="text" id="searchInput" class="form-control" placeholder="Search employees...">
+                    </div>
+
+                    <!-- Add Employee Button -->
+                    <div class="text-end mb-3">
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addEmployeeModal">Add Employee</button>
+                    </div>
+
+                    <!-- Table 1: Total Employees -->
+                    <div class="table-container">
+                        <h3 class="section-title">Total Employees</h3>
+                        <table class="table table-bordered table-striped">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>#</th>
+                                    <th>Name</th>
+                                    <th>Surname</th>
+                                    <th>Address</th>
+                                    <th>ID</th>
+                                    <th>Contact</th>
+                                    <th>Race</th>
+                                    <th>Gender</th>
+                                    <th>Position</th>
+                                    <th>Leave Days</th>
+                                </tr>
+                            </thead>
+                            <tbody id="total-employees">
+                                <!-- Rows will be added by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- Table 2: Employees on Leave -->
+                    <div class="table-container">
+                        <h3 class="section-title">Employees on Leave</h3>
+                        <table class="table table-bordered table-striped">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>#</th>
+                                    <th>Name</th>
+                                    <th>Surname</th>
+                                    <th>Status</th>
+                                    <th>Expected Return</th>
+                                </tr>
+                            </thead>
+                            <tbody id="employees-on-leave">
+                                <!-- Rows will be added by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Table 3: Employee Performance -->
+                    <div class="table-container">
+                        <h3 class="section-title">Employee Performance for October</h3>
+                        <table class="table table-bordered table-striped">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>#</th>
+                                    <th>Name</th>
+                                    <th>Surname</th>
+                                    <th>Performance Rating</th>
+                                    <th>Remarks</th>
+                                </tr>
+                            </thead>
+                            <tbody id="employee-performance">
+                                <!-- Rows will be added by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Best Employees of the Month -->
+                    <h3 class="section-title text-center">Best Employees of the Month</h3>
+                    <div class="best-employees" id="best-employees">
+                        <!-- Best employees cards will be added by JavaScript -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal for Adding Employee -->
+            <div class="modal fade" id="addEmployeeModal" tabindex="-1" aria-labelledby="addEmployeeModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="addEmployeeModalLabel">Add New Employee</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="addEmployeeForm">
+                                <div class="mb-3">
+                                    <label for="empName" class="form-label">Name</label>
+                                    <input type="text" class="form-control" id="empName" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="empSurname" class="form-label">Surname</label>
+                                    <input type="text" class="form-control" id="empSurname" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="empAddress" class="form-label">Address</label>
+                                    <input type="text" class="form-control" id="empAddress" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="empId" class="form-label">ID</label>
+                                    <input type="text" class="form-control" id="empId" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="empContact" class="form-label">Contact</label>
+                                    <input type="text" class="form-control" id="empContact" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="empRace" class="form-label">Race</label>
+                                    <input type="text" class="form-control" id="empRace" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="empGender" class="form-label">Gender</label>
+                                    <select class="form-select" id="empGender" required>
+                                        <option value="" disabled selected>Select Gender</option>
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="empPosition" class="form-label">Position</label>
+                                    <input type="text" class="form-control" id="empPosition" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="leaveDays" class="form-label">Leave Days</label>
+                                    <input type="number" class="form-control" id="leaveDays" required>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Add Employee</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
+    <script>
+        // Mock data for employees
+        const employees = [
+            { id: 1, name: 'John', surname: 'Doe', address: '123 Main St', idNum: '123456789', contact: '123-456-7890', race: 'Caucasian', gender: 'Male', position: 'Manager', leaveDays: 2 },
+            { id: 2, name: 'Jane', surname: 'Smith', address: '456 Elm St', idNum: '987654321', contact: '987-654-3210', race: 'African', gender: 'Female', position: 'Worker', leaveDays: 5 },
+            { id: 3, name: 'Alice', surname: 'Johnson', address: '789 Oak St', idNum: '234567890', contact: '234-567-8901', race: 'Hispanic', gender: 'Female', position: 'Worker', leaveDays: 0 },
+            // ... More employees
+        ];
+
+        const employeesOnLeave = [
+            { id: 1, name: 'John', surname: 'Doe', status: 'Sick Leave', expectedReturn: '2024-11-05' },
+            { id: 2, name: 'Jane', surname: 'Smith', status: 'Annual Leave', expectedReturn: '2024-11-15' },
+            { id: 3, name: 'Alice', surname: 'Johnson', status: 'Personal Leave', expectedReturn: '2024-11-01' },
+            // ... More employees
+        ];
+
+        const employeePerformance = [
+            { id: 1, name: 'John', surname: 'Doe', rating: 5, remarks: 'Excellent performance!' },
+            { id: 2, name: 'Jane', surname: 'Smith', rating: 4, remarks: 'Very good, but needs improvement in attendance.' },
+            { id: 3, name: 'Alice', surname: 'Johnson', rating: 3, remarks: 'Satisfactory, but can be more proactive.' },
+            // ... More employees
+        ];
+
+        const bestEmployees = [
+            { id: 1, name: 'Kelebogile', surname: 'Maema', position: 'Manager', img: '../about us/kele.png', performance: 'Best Manager of the Month' },
+            { id: 2, name: 'Clerence', surname: 'Ngwoepe', position: 'Worker', img: '../about us/ck.png', performance: 'Top Performer in Sales' },
+            
+            // ... More employees
+        ];
+
+        // Function to load employee data into the tables
+        function loadEmployees() {
+            const totalEmployeesTable = document.getElementById('total-employees');
+            const employeesOnLeaveTable = document.getElementById('employees-on-leave');
+            const employeePerformanceTable = document.getElementById('employee-performance');
+            const bestEmployeesContainer = document.getElementById('best-employees');
+
+            // Clear existing rows
+            totalEmployeesTable.innerHTML = '';
+            employeesOnLeaveTable.innerHTML = '';
+            employeePerformanceTable.innerHTML = '';
+            bestEmployeesContainer.innerHTML = '';
+
+            // Populate Total Employees Table
+            employees.forEach(emp => {
+                const row = `<tr>
+                                <td>${emp.id}</td>
+                                <td>${emp.name}</td>
+                                <td>${emp.surname}</td>
+                                <td>${emp.address}</td>
+                                <td>${emp.idNum}</td>
+                                <td>${emp.contact}</td>
+                                <td>${emp.race}</td>
+                                <td>${emp.gender}</td>
+                                <td>${emp.position}</td>
+                                <td>${emp.leaveDays}</td>
+                             </tr>`;
+                totalEmployeesTable.innerHTML += row;
+            });
+
+            // Populate Employees on Leave Table
+            employeesOnLeave.forEach(emp => {
+                const row = `<tr>
+                                <td>${emp.id}</td>
+                                <td>${emp.name}</td>
+                                <td>${emp.surname}</td>
+                                <td>${emp.status}</td>
+                                <td>${emp.expectedReturn}</td>
+                             </tr>`;
+                employeesOnLeaveTable.innerHTML += row;
+            });
+
+            // Populate Employee Performance Table
+            employeePerformance.forEach(emp => {
+                const row = `<tr>
+                                <td>${emp.id}</td>
+                                <td>${emp.name}</td>
+                                <td>${emp.surname}</td>
+                                <td>${emp.rating}</td>
+                                <td>${emp.remarks}</td>
+                             </tr>`;
+                employeePerformanceTable.innerHTML += row;
+            });
+
+            // Populate Best Employees Cards
+            bestEmployees.forEach(emp => {
+                const card = `<div class="best-employee-card card">
+                                <img src="${emp.img}" class="card-img-top" alt="${emp.name} ${emp.surname}">
+                                <div class="card-body">
+                                    <h5 class="card-title">${emp.name} ${emp.surname}</h5>
+                                    <p class="card-text">${emp.position}</p>
+                                    <p class="card-text">${emp.performance}</p>
+                                </div>
+                              </div>`;
+                bestEmployeesContainer.innerHTML += card;
+            });
+        }
+
+        // Event listener for adding new employee
+        document.getElementById('addEmployeeForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const name = document.getElementById('empName').value;
+            const surname = document.getElementById('empSurname').value;
+            const address = document.getElementById('empAddress').value;
+            const idNum = document.getElementById('empId').value;
+            const contact = document.getElementById('empContact').value;
+            const race = document.getElementById('empRace').value;
+            const gender = document.getElementById('empGender').value;
+            const position = document.getElementById('empPosition').value;
+            const leaveDays = document.getElementById('leaveDays').value;
+
+            // Create new employee object
+            const newEmployee = {
+                id: employees.length + 1,
+                name,
+                surname,
+                address,
+                idNum,
+                contact,
+                race,
+                gender,
+                position,
+                leaveDays: parseInt(leaveDays)
+            };
+
+            // Add to employees array and reload tables
+            employees.push(newEmployee);
+            loadEmployees();
+
+            // Reset form and close modal
+            document.getElementById('addEmployeeForm').reset();
+            const modal = bootstrap.Modal.getInstance(document.getElementById('addEmployeeModal'));
+            modal.hide();
+        });
+
+        // Initial load of employee data
+        loadEmployees();
+    </script>
+</body>
+
+</html>
