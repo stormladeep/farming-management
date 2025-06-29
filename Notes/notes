@@ -1,0 +1,43 @@
+/your-project
+│
+├── /public                 # Public assets for React
+│   ├── index.html          # Entry point for React
+│   └── /assets             # Any assets for the React app
+│       ├── /css
+│       ├── /js
+│       └── /images
+│
+├── /src                    # Source code for React
+│   ├── App.js              # Main React component
+│   ├── index.js            # React entry point
+│   └── (other components)
+│
+├── /pages                  # Static HTML pages
+│   ├── page1.html          # First HTML page
+│   ├── page2.html          # Second HTML page
+│   └── (other HTML pages)
+│
+├── /styles                 # Global styles
+│   ├── styles.css          # Global CSS
+│
+└── package.json            # For React project dependencies
+
+under html
+<!-- In page1.html and page2.html -->
+<a href="../public/index.html">Go to React App</a>
+
+in react app
+// In App.js or any component
+import React from 'react';
+
+const App = () => {
+    return (
+        <div>
+            <h1>Welcome to the React App</h1>
+            <a href="../pages/page1.html">Go to Page 1</a>
+            <a href="../pages/page2.html">Go to Page 2</a>
+        </div>
+    );
+}
+
+export default App;
